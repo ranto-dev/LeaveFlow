@@ -37,7 +37,7 @@ une application simple et fonctionnelle permettant
 
 ## III. Stack
 
-- **frontend**: Tailwindcss / Typescript & React.js avec framer motion
+- **frontend**: Tailwindcss avec DaisyUI / Typescript & React.js avec framer motion
 - **backend**: Node & Express.js
 - **base de donnée**: MongoDB
 - **CI/CD**: Docker, Git, GitHub
