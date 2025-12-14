@@ -2,9 +2,8 @@ const Leave = require("../models/LeaveRequest");
 
 module.exports.getAllLeaveRequest = async (req, res) => {
   const { statut, sort } = req.query;
-
   const filtre = {};
-
+  
   if (statut) {
     filtre.statut = statut;
   }
