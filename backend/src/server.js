@@ -1,6 +1,7 @@
 const express = require("express");
 const connectDB = require("./config/db.js");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 
 // Configuration de l'importation des variables d'environemùent
 dotenv.config();
@@ -14,6 +15,7 @@ connectDB();
 // Middleware qui permet de traiter les données de la request
 app.use(express.json());
 app.use(express.urlencoded({}));
+app.use(cookieParser());
 
 // Déclaration des routes
 app.use("/api/auth", require("./routes/auth.routes.js"));

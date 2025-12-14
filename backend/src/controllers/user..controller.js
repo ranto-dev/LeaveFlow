@@ -68,18 +68,38 @@ module.exports.findUserById = async (req, res) => {
 
 // PUT: modifier un utilisateur
 module.exports.editUserById = async (req, res) => {
-  const id = req.params.id;
-  const user = await User.findById(id);
+  const userId = req.params.id;
 
-  if (!user) {
-    return res.status(400).json({ message: "Utilisateur non trouvé" });
+  const updates = {};
+  const { nom, prenom, email, adresse, motDePasse, role, soldeConges } =
+    req.body;
+
+  if (nom && prenom && email && adresse && role) {
+    updates.nom = nom;
+    updates.prenom = prenom;
+    updates.email = email;
+    updates.adresse = adresse;
+    updates.role = role;
+  }
+
+  if (soldeConges !== undefined) {
+    if (soldeConges > 20) {
+      return res
+        .status(400)
+        .json({ message: "le solde doit etre inférieur à 20" });
+    }
+    updates.soldeConges = soldeConges;
+  }
+
+  if (motDePasse) {
+    updates.motDePasse = await bcrypt.hash(motDePasse, 10);
   }
 
   try {
-    const userUpdated = await User.findByIdAndUpdate(user, req.body, {
+    const updatedUser = await User.findByIdAndUpdate(userId, updates, {
       new: false,
-    });
-    res.status(200).json(userUpdated);
+    }).select("-motDePasse");
+    res.json(updatedUser);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Erreur interne du serveur" });
