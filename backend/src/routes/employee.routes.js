@@ -1,11 +1,11 @@
 const router = require("express").Router();
-const auth = require("../middlewares/auth.middleware");
+const { requestLeave, getAllMyLeaves, deleteLeave } = require("../controllers/employee.controller.js");
+const { protect } = require("../middlewares/auth.middleware");
 const role = require("../middlewares/role.middleware");
-const ctrl = require("../controllers/employee.controller");
 
-router.use(auth, role("EMPLOYE"));
-router.post("/conge", ctrl.demanderConge);
-router.get("/conges", ctrl.mesConges);
-router.delete("/conge/:id", ctrl.supprimerConge);
+router.use(protect, role("EMPLOYE"));
+router.post("/conge", requestLeave);
+router.get("/conges", getAllMyLeaves);
+router.delete("/conge/:id", deleteLeave);
 
 module.exports = router;

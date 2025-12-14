@@ -1,6 +1,6 @@
 const Leave = require("../models/LeaveRequest");
 
-module.exports.toutesDemandes = async (req, res) => {
+module.exports.getAllLeaveRequest = async (req, res) => {
   const { statut, sort } = req.query;
 
   const filtre = {};
@@ -16,7 +16,7 @@ module.exports.toutesDemandes = async (req, res) => {
   res.json(demandes);
 };
 
-module.exports.traiterDemande = async (req, res) => {
+module.exports.treateRequest = async (req, res) => {
   const { statut } = req.body;
   const demande = await Leave.findByIdAndUpdate(
     req.params.id,
