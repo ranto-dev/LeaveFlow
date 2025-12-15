@@ -11,6 +11,13 @@ module.exports.requestLeave = async (req, res) => {
       .json({ message: "il y a un ou des données manquantes!" });
   }
 
+  const jours =
+    (new Date(dateFin) - new Date(dateDebut)) / (1000 * 60 * 60 * 24) + 1;
+
+  if (jours > user.soldeConges) {
+    return res.status(400).json({ message: "Solde insuffisant" });
+  }
+
   try {
     const leave = await Leave.create({
       type,
