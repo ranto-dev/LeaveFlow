@@ -46,7 +46,7 @@ module.exports.getAllUsers = async (req, res) => {
   }
 };
 
-// GET: obtenir des informations d'un utilisateur par son ID
+// GET: récupérer un utilisateur par son ID
 module.exports.findUserById = async (req, res) => {
   const id = req.params.id;
 
