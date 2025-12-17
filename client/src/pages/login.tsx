@@ -31,24 +31,32 @@ export default function LoginPage() {
 
           {error && <div className="alert alert-error">{error}</div>}
 
-          <form onSubmit={handleSubmit} className="space-y-3">
-            <input
-              type="email"
-              placeholder="Email"
-              className="input input-bordered w-full"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Mot de passe"
-              className="input input-bordered w-full"
-              value={motDePasse}
-              onChange={(e) => setMotDePasse(e.target.value)}
-              required
-            />
-            <button className="btn btn-primary w-full">Se connecter</button>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                className="input input-bordered w-full"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="password">Mot de passe</label>
+              <input
+                type="password"
+                className="input input-bordered w-full"
+                id="password"
+                value={motDePasse}
+                onChange={(e) => setMotDePasse(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <button className="btn btn-primary w-full">Se connecter</button>
+            </div>
           </form>
         </div>
       </div>
