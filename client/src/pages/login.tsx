@@ -1,53 +1,64 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
 
-export default function Login() {
-  const { login } = useAuth();
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [motDePasse, setMotDePasse] = useState("");
+const LoginPage = () => {
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target as HTMLFormElement);
+    const data = {
+      email: formData.get("email"),
+      motDePasse: formData.get("password"),
+    };
+
     try {
-      await login(email, motDePasse);
-      navigate("/");
-    } catch {
-      setError("Identifiants invalides");
+      fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response);
+          navigate("/user-dash");
+        });
+    } catch (err) {
+      console.error(err);
+      setError("Email ou mot de passe invalide");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200">
-      <div className="card w-96 bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title justify-center">Connexion</h2>
-
-          {error && <div className="alert alert-error">{error}</div>}
-
-          <form onSubmit={handleSubmit} className="space-y-3">
-            <input
-              type="email"
-              placeholder="Email"
-              className="input input-bordered w-full"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Mot de passe"
-              className="input input-bordered w-full"
-              value={motDePasse}
-              onChange={(e) => setMotDePasse(e.target.value)}
-              required
-            />
-            <button className="btn btn-primary w-full">Se connecter</button>
-          </form>
-        </div>
-      </div>
+    <div className="w-full h-screen flex flex-col justify-center items-center">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 border p-4 rounded-xl"
+      >
+        {error && <p className="text-red-500 text-sm"> {error} </p>}
+        <h1 className="text-center text-2xl">Page de connexion</h1>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          className="border border-white rounded-xl p-2"
+        />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          className="border border-white rounded-xl p-2"
+        />
+        <button className="btn btn-primary" type="submit">
+          Se connecter
+        </button>
+      </form>
     </div>
   );
-}
+};
+
+export default LoginPage;

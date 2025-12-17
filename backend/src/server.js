@@ -17,7 +17,12 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({}));
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 // Déclaration des routes
 app.use("/api/auth", require("./routes/auth.routes.js"));

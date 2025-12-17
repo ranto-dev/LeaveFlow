@@ -6,7 +6,7 @@ const cookieOptions = {
   httpOnlty: true,
   secure: process.env.NODE_ENV === "production",
   sameSite: "strict",
-  maxAge: 30 * 24 * 60 * 60 * 1000, // une journée
+  maxAge: 30 * 24 * 60 * 60 * 1000,
 };
 
 module.exports.login = async (req, res) => {
@@ -32,7 +32,15 @@ module.exports.login = async (req, res) => {
 };
 
 module.exports.getMe = async (req, res) => {
-  res.status(200).json(req.user);
+  try {
+    res.status(200).json(req.user);
+  } catch (err) {
+    console.error(err);
+    res
+      .status(400)
+      .json({ message: "Aucun utlisateur est connecté actuellement!" });
+  }
+  res.end();
 };
 
 module.exports.logout = (req, res) => {
