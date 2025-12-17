@@ -1,44 +1,39 @@
 import { useEffect, useState } from "react";
-import DemandeForm from "../../components/form/demandeForm";
+import LeaveRequestForm from "../../components/form/leaveRequestForm";
 import Modal from "../../components/Modal";
-import { MdEdit } from "react-icons/md";
-import { FaTrash } from "react-icons/fa6";
 import type { LeaveRequestType } from "../../typescript/requestLeave";
+import LeaveRequestList from "./LeaveRequestList";
 
 const EmployeeDashboard = () => {
-  const [modal, setModal] = useState<{
-    type: string;
-    requestLeave: LeaveRequestType | null;
-  }>({
-    type: "",
-    requestLeave: null,
-  });
   const [leaveRequest, setLeaveRequest] = useState<LeaveRequestType[]>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [editing, setEditing] = useState<LeaveRequestType | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = (type: string, requestLeave: LeaveRequestType | null) => {
-    setModal({ type, requestLeave });
+  const openCreateModal = () => {
+    setEditing(null);
+    setIsModalOpen(true);
+  };
+
+  const openEditModal = (request: LeaveRequestType) => {
+    setEditing(request);
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setModal({ type: "", requestLeave: null });
+    setIsModalOpen(false);
+    setEditing(null);
   };
 
-  const renderModalContentEmploye = () => {
-    const { type, requestLeave } = modal;
+  const handleCreate = (data: Partial<LeaveRequestType>) => {
+    console.log("Créer", data);
+    // fetch POST /api/demandes
+  };
 
-    if (!type) return null;
-
-    switch (type) {
-      case "ajouterDemandeConge":
-        return <DemandeForm requestLeave={null} />;
-
-      case "modifierDemande":
-        return <DemandeForm requestLeave={requestLeave} />;
-
-      default:
-        return null;
-    }
+  const handleUpdate = (data: Partial<LeaveRequestType>) => {
+    console.log("Modifier", editing?._id, data);
+    // fetch PUT /api/demandes/:id
+    setEditing(null);
   };
 
   useEffect(() => {
@@ -74,75 +69,27 @@ const EmployeeDashboard = () => {
 
   return (
     <>
-      <div className="container m-auto my-4 border border-neutral-500/20 shadowzy rounded-xl  p-10">
-        {/**
-         * content - header
-         */}
+      <div className="container space-y-10 m-auto my-4 border border-neutral-500/20 shadowzy rounded-xl  p-10">
         <div className="flex justify-between items-start">
           <div>
             <h1 className="text-3xl font-bold">Dashboard Employé</h1>
             <p className="mt-4">Soumission et suivi de vos congés.</p>
           </div>
           <div>
-            <button
-              onClick={() =>
-                openModal({ type: "ajouterDemandeConge", requestLeave: null })
-              }
-              className="btn btn-primary"
-            >
+            <button onClick={openCreateModal} className="btn btn-primary">
               Demander un congé
             </button>
           </div>
         </div>
 
-        {/**
-         * content: liste des demandes de congé
-         */}
-        <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Date de début</th>
-                <th>Date de fin</th>
-                <th>Commentaire</th>
-                <th>Status</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {leaveRequest.map((request: LeaveRequestType, index: number) => {
-                return (
-                  <tr key={index}>
-                    <td> {request.type} </td>
-                    <td> {request.dateDebut} </td>
-                    <td> {request.dateFin} </td>
-                    <td> {request.commentaire} </td>
-                    <td> {request.statut} </td>
-                    <td className="flex justify-end gap-2">
-                      <button
-                        className="btn btn-primary flex justify-around items-center gap-1"
-                        disabled={
-                          request.statut !== "EN_ATTENTE" ? true : false
-                        }
-                      >
-                        <MdEdit /> modifier
-                      </button>
-
-                      <button className="btn btn-error text-white flex justify-around items-center gap-1">
-                        <FaTrash /> supprimer
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <LeaveRequestList leaveRequest={leaveRequest} onEdit={openEditModal} />
       </div>
       {
-        <Modal isOpen={modal.type !== ""} onClose={closeModal}>
-          {renderModalContentEmploye()}
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <LeaveRequestForm
+            initialData={editing}
+            onSubmit={editing ? handleUpdate : handleCreate}
+          />
         </Modal>
       }
     </>
