@@ -3,7 +3,7 @@ import LeaveRequestForm from "../../components/form/leaveRequestForm";
 import Modal from "../../components/Modal";
 import type { LeaveRequestType } from "../../typescript/requestLeave";
 import LeaveRequestList from "./LeaveRequestList";
-import { postLeaveRequest } from "../../api/employe";
+import { getMyLeaveRequests, postLeaveRequest } from "../../api/employe";
 
 const EmployeeDashboard = () => {
   const [leaveRequest, setLeaveRequest] = useState<LeaveRequestType[]>([]);
@@ -38,30 +38,17 @@ const EmployeeDashboard = () => {
   };
 
   useEffect(() => {
-    const abortController = new AbortController();
-
-    fetch(`http://${window.location.hostname}:3000/api/employee/leaves`, {
-      method: "GET",
-      credentials: "include",
-      signal: abortController.signal,
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        setLeaveRequest(response);
+    const loadLeaveRequests = async () => {
+      try {
+        const data = await getMyLeaveRequests();
+        setLeaveRequest(data);
         setIsLoaded(true);
-      })
-      .catch((error) => {
-        setIsLoaded(false);
-        if (error.name === "AbortError") {
-          console.log("Fetch annulé");
-        } else {
-          console.error("Erreur lors du fetch:", error);
-        }
-      });
-
-    return () => {
-      abortController.abort();
+      } catch (err) {
+        console.error(err);
+      }
     };
+
+    loadLeaveRequests();
   }, []);
 
   if (isLoaded === false) {
