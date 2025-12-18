@@ -1,4 +1,5 @@
 const Leave = require("../models/LeaveRequest");
+const User = require("../models/User.js");
 
 // POST: demander un congé
 module.exports.requestLeave = async (req, res) => {
@@ -14,11 +15,17 @@ module.exports.requestLeave = async (req, res) => {
   const jours =
     (new Date(dateFin) - new Date(dateDebut)) / (1000 * 60 * 60 * 24) + 1;
 
-  if (jours > user.soldeConges) {
-    return res.status(400).json({ message: "Solde insuffisant" });
-  }
-
   try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(400).json({ message: "utilisateur introuvable!" });
+    }
+
+    if (jours > user.soldeConges) {
+      return res.status(400).json({ message: "Solde insuffisant" });
+    }
+
     const leave = await Leave.create({
       type,
       dateDebut,

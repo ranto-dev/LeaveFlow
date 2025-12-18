@@ -3,6 +3,7 @@ import LeaveRequestForm from "../../components/form/leaveRequestForm";
 import Modal from "../../components/Modal";
 import type { LeaveRequestType } from "../../typescript/requestLeave";
 import LeaveRequestList from "./LeaveRequestList";
+import { postLeaveRequest } from "../../api/employe";
 
 const EmployeeDashboard = () => {
   const [leaveRequest, setLeaveRequest] = useState<LeaveRequestType[]>([]);
@@ -26,8 +27,8 @@ const EmployeeDashboard = () => {
   };
 
   const handleCreate = (data: Partial<LeaveRequestType>) => {
-    console.log("Créer", data);
-    // fetch POST /api/demandes
+    console.log("Créer", JSON.stringify(data));
+    postLeaveRequest(data);
   };
 
   const handleUpdate = (data: Partial<LeaveRequestType>) => {
