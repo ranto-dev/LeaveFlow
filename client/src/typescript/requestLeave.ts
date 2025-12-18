@@ -1,7 +1,7 @@
 export type StatutDemande = "EN_ATTENTE" | "ACCEPTEE" | "REFUSEE";
 
 export type LeaveRequestType = {
-  _id: string;
+  _id?: string;
   type: string;
   dateDebut: string;
   dateFin: string;

@@ -4,10 +4,15 @@ import type { LeaveRequestType } from "../../typescript/requestLeave";
 
 type LeaveRequestListProps = {
   leaveRequest: LeaveRequestType[];
-  onEdit: (demande: LeaveRequestType) => void;
+  onEdit: (request: LeaveRequestType) => void;
+  onDelete: (request: LeaveRequestType) => void;
 };
 
-const LeaveRequestList = ({ leaveRequest, onEdit }: LeaveRequestListProps) => {
+const LeaveRequestList = ({
+  leaveRequest,
+  onEdit,
+  onDelete,
+}: LeaveRequestListProps) => {
   return (
     <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
       {leaveRequest.length === 0 ? (
@@ -55,7 +60,11 @@ const LeaveRequestList = ({ leaveRequest, onEdit }: LeaveRequestListProps) => {
                       <MdEdit />
                     </button>
 
-                    <button className="btn btn-error text-white">
+                    <button
+                      className="btn btn-error text-white"
+                      disabled={request.statut !== "EN_ATTENTE" ? true : false}
+                      onClick={() => onDelete(request)}
+                    >
                       <FaTrash />
                     </button>
                   </td>

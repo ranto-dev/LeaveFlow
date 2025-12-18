@@ -3,12 +3,21 @@ import LeaveRequestForm from "../../components/form/leaveRequestForm";
 import Modal from "../../components/Modal";
 import type { LeaveRequestType } from "../../typescript/requestLeave";
 import LeaveRequestList from "./LeaveRequestList";
+import {
+  editLeaveRequest,
+  getMyLeaveRequests,
+  postLeaveRequest,
+} from "../../api/employe";
+import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
+import { deleteLeaveRequest } from "../../api/employe";
 
 const EmployeeDashboard = () => {
   const [leaveRequest, setLeaveRequest] = useState<LeaveRequestType[]>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [editing, setEditing] = useState<LeaveRequestType | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleting, setDeleting] = useState<LeaveRequestType | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const openCreateModal = () => {
     setEditing(null);
@@ -20,47 +29,53 @@ const EmployeeDashboard = () => {
     setIsModalOpen(true);
   };
 
+  const openDeleteModal = (request: LeaveRequestType) => {
+    setDeleting(request);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleting) return;
+
+    try {
+      setDeleteLoading(true);
+      await deleteLeaveRequest(deleting?._id);
+      setDeleting(null);
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
     setEditing(null);
   };
 
   const handleCreate = (data: Partial<LeaveRequestType>) => {
-    console.log("Créer", data);
-    // fetch POST /api/demandes
+    postLeaveRequest(data);
+    window.location.reload();
   };
 
   const handleUpdate = (data: Partial<LeaveRequestType>) => {
-    console.log("Modifier", editing?._id, data);
-    // fetch PUT /api/demandes/:id
+    editLeaveRequest(editing?._id, data);
     setEditing(null);
+    window.location.reload();
   };
 
   useEffect(() => {
-    const abortController = new AbortController();
-
-    fetch(`http://${window.location.hostname}:3000/api/employee/leaves`, {
-      method: "GET",
-      credentials: "include",
-      signal: abortController.signal,
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        setLeaveRequest(response);
+    const loadLeaveRequests = async () => {
+      try {
+        const data = await getMyLeaveRequests();
+        setLeaveRequest(data);
         setIsLoaded(true);
-      })
-      .catch((error) => {
-        setIsLoaded(false);
-        if (error.name === "AbortError") {
-          console.log("Fetch annulé");
-        } else {
-          console.error("Erreur lors du fetch:", error);
-        }
-      });
-
-    return () => {
-      abortController.abort();
+      } catch (err) {
+        console.error(err);
+      }
     };
+
+    loadLeaveRequests();
   }, []);
 
   if (isLoaded === false) {
@@ -82,16 +97,24 @@ const EmployeeDashboard = () => {
           </div>
         </div>
 
-        <LeaveRequestList leaveRequest={leaveRequest} onEdit={openEditModal} />
+        <LeaveRequestList
+          leaveRequest={leaveRequest}
+          onEdit={openEditModal}
+          onDelete={openDeleteModal}
+        />
       </div>
-      {
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
-          <LeaveRequestForm
-            initialData={editing}
-            onSubmit={editing ? handleUpdate : handleCreate}
-          />
-        </Modal>
-      }
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <LeaveRequestForm
+          initialData={editing}
+          onSubmit={editing ? handleUpdate : handleCreate}
+        />
+      </Modal>
+      <ConfirmDeleteModal
+        isOpen={!!deleting}
+        onClose={() => setDeleting(null)}
+        onConfirm={confirmDelete}
+        loading={deleteLoading}
+      />
     </>
   );
 };
