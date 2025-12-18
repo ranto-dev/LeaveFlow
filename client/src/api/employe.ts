@@ -32,3 +32,38 @@ export async function getMyLeaveRequests(): Promise<LeaveRequestType[]> {
 
   return response.json();
 }
+
+export const editLeaveRequest = async (
+  id: string | undefined,
+  data: Partial<LeaveRequestType>
+) => {
+  await fetch(
+    `http://${window.location.hostname}:3000/api/employee/leave/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(data),
+    }
+  )
+    .then((response) => response.json())
+    .then((response) => console.log(response))
+    .catch((err) => console.error(err));
+};
+
+export const deleteLeaveRequest = async (id: string | undefined) => {
+  const response = await fetch(
+    `http://${window.location.hostname}:3000/api/employee/leave/${id}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+    }
+  );
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Erreur lors de la suppression");
+  }
+};

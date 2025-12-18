@@ -57,6 +57,45 @@ module.exports.getAllMyLeaves = async (req, res) => {
   res.end();
 };
 
+// UPDATE: Si la demande est encore en ATTENTE
+module.exports.editLeaveRequest = async (req, res) => {
+  const id = req.params.id;
+  const { type, dateDebut, dateFin, commentaire } = req.body;
+  const userId = req.user.id;
+
+  const updates = {};
+
+  if (type && dateDebut && dateFin && commentaire) {
+    updates.type = type;
+    updates.dateDebut = dateDebut;
+    updates.dateFin = dateFin;
+    updates.commentaire = commentaire;
+    updates.employe = userId;
+  }
+
+  if (!id) {
+    return res.status(400).json({ message: "Préciser le champ ID" });
+  }
+
+  try {
+    const request = await Leave.findById(id);
+
+    if (!request) {
+      return res.status(400).json({ message: "Demande non trouvée!" });
+    }
+
+    const requestUpdated = await Leave.findByIdAndUpdate(id, updates, {
+      new: false,
+    });
+    res.json(requestUpdated);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Erreur interne du serveur" });
+  }
+
+  res.end();
+};
+
 // DELETE: Annuler la demande d'un congé
 module.exports.deleteLeave = async (req, res) => {
   const userId = req.user.id;
