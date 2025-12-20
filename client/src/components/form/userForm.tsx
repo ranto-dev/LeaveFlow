@@ -11,15 +11,24 @@ const UserForm = ({ initialData, onSubmit }: UserFormProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-
-    onSubmit({
+    const data = {
       nom: formData.get("nom") as string,
       prenom: formData.get("prenom") as string,
       email: formData.get("email") as string,
       adresse: formData.get("adresse") as string,
-      soldeConges: formData.get("soldeConges") as unknown as number,
+      soldeConges: 20,
       role: formData.get("role") as string,
-    });
+    };
+
+    if (formData.get("motDePasse") !== undefined) {
+      const dataWithPassword = {
+        ...data,
+        motDePasse: formData.get("motDePasse") as string,
+      };
+      onSubmit(dataWithPassword);
+    } else {
+      onSubmit(data);
+    }
   };
 
   return (
