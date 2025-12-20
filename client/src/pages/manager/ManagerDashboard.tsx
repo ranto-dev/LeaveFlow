@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import type { LeaveRequestType } from "../../typescript/requestLeave";
-import { getAllLeaveRequest, treateLeaveRequest } from "../../api/manager";
 import AllLeaveRequestList from "./AllLeaveRequestList";
 import TreateRequestModal from "../../components/TreateRequestModal";
+import { getAllLeaveRequest, treateLeaveRequest } from "../../api/leave.api";
 
 const ManagerDashboard = () => {
   const [leaveRequest, setLeaveRequest] = useState<LeaveRequestType[]>([]);
