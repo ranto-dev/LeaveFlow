@@ -43,19 +43,10 @@ const ManagerDashboard = () => {
   return (
     <>
       <div className="container space-y-10 m-auto my-4 border border-neutral-500/20 shadowzy rounded-xl  p-10">
-        <div className="flex justify-between items-start">
+        <div className="flex justify-start items-start">
           <div>
             <h1 className="text-3xl font-bold">Dashboard Gestionnaire</h1>
             <p className="mt-4">Gestion et suivi des demandes de congé.</p>
-          </div>
-          <div>
-            <input
-              type="text"
-              name="search"
-              id="search"
-              placeholder="Search ..."
-              className="border border-white rounded-xl p-2"
-            />
           </div>
         </div>
         <AllLeaveRequestList

@@ -95,11 +95,10 @@ const EmployeeDashboard = () => {
               Demander un congé
             </button>
           </div>
-          
         </div>
 
         <LeaveRequestList
-          leaveRequest={leaveRequest}
+          leaveRequests={leaveRequest}
           onEdit={openEditModal}
           onDelete={openDeleteModal}
         />
