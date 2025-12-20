@@ -1,5 +1,6 @@
 import type { LeaveRequestType } from "../typescript/requestLeave";
 
+// pour la création d'une nouvelle demande de congé
 export async function postLeaveRequest(request: Partial<LeaveRequestType>) {
   await fetch(`http://${window.location.hostname}:3000/api/worker/request`, {
     method: "POST",
@@ -14,6 +15,24 @@ export async function postLeaveRequest(request: Partial<LeaveRequestType>) {
     .catch((err) => console.error(err));
 }
 
+// pour la récupération de toute la liste des demandes de congé
+export const getAllLeaveRequest = async () => {
+  const response = await fetch(
+    `http://${window.location.hostname}:3000/api/manager/leaves/all`,
+    {
+      method: "GET",
+      credentials: "include",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Erreur lors de la récupération des demandes");
+  }
+
+  return response.json();
+};
+
+// pour récupérer tous les demandes de congé de l'utilisateur courrant
 export async function getMyLeaveRequests(): Promise<LeaveRequestType[]> {
   const response = await fetch(
     `http://${window.location.hostname}:3000/api/worker/leaves`,
@@ -30,6 +49,7 @@ export async function getMyLeaveRequests(): Promise<LeaveRequestType[]> {
   return response.json();
 }
 
+// pour mettre à jour et modifier une demande de congé
 export const editLeaveRequest = async (
   id: string,
   data: Partial<LeaveRequestType>
@@ -50,22 +70,7 @@ export const editLeaveRequest = async (
     .catch((err) => console.error(err));
 };
 
-export const getAllLeaveRequest = async () => {
-  const response = await fetch(
-    `http://${window.location.hostname}:3000/api/gestionnaire/conges`,
-    {
-      method: "GET",
-      credentials: "include",
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error("Erreur lors de la récupération des demandes");
-  }
-
-  return response.json();
-};
-
+// traitement d'une demande de congé
 export const treateLeaveRequest = async (
   _id: string | undefined,
   statut: {
@@ -73,7 +78,7 @@ export const treateLeaveRequest = async (
   }
 ) => {
   await fetch(
-    `http://${window.location.hostname}:3000/api/gestionnaire/conge/${_id}`,
+    `http://${window.location.hostname}:3000/api/manager/leave/treate/${_id}`,
     {
       method: "PUT",
       headers: {
@@ -88,6 +93,7 @@ export const treateLeaveRequest = async (
     .catch((err) => console.error(err));
 };
 
+// pour supprimer une demande de congé
 export const deleteLeaveRequest = async (id: string | undefined) => {
   const response = await fetch(
     `http://${window.location.hostname}:3000/api/worker/leave/${id}`,

@@ -14,9 +14,9 @@ const {
 router.use(protect, role("GESTIONNAIRE"));
 
 // route pour la récupération de la liste des demandes de congé
-router.get("/conges", getAllLeaveRequest);
+router.get("/leaves/all", getAllLeaveRequest);
 
 // route pour le traitement d'une demande de congé
-router.put("/conge/:id", treateRequest);
+router.put("/leave/treate/:id", treateRequest);
 
 module.exports = router;
