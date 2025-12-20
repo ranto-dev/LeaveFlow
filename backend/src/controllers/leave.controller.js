@@ -1,7 +1,10 @@
+/**
+ * Controller pour la gestion de congé
+ */
 const Leave = require("../models/LeaveRequest");
 const User = require("../models/User.js");
 
-// POST: demander un congé
+// POST: controller pour la création d'une demande de congé
 module.exports.requestLeave = async (req, res) => {
   const { type, dateDebut, dateFin, commentaire } = req.body;
   const userId = req.user.id;
@@ -17,15 +20,12 @@ module.exports.requestLeave = async (req, res) => {
 
   try {
     const user = await User.findById(userId);
-
     if (!user) {
       return res.status(400).json({ message: "utilisateur introuvable!" });
     }
-
     if (jours > user.soldeConges) {
       return res.status(400).json({ message: "Solde insuffisant" });
     }
-
     const leave = await Leave.create({
       type,
       dateDebut,
@@ -38,11 +38,25 @@ module.exports.requestLeave = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Erreur interne du serveur" });
   }
-
   res.end();
 };
 
-// GET: Récupérer la list des congés de l'utlisateur courrante
+// GET: controller pour la récupération de toute la liste des demandes de congé
+module.exports.getAllLeaveRequest = async (req, res) => {
+  try {
+    const demandes = await Leave.find().populate(
+      "employe",
+      "nom prenom email soldeConges"
+    );
+    res.json(demandes);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Erreur interne du serveur" });
+  }
+  res.end();
+};
+
+// GET: conttoller pour la récupération de la liste des demandes de congé d'un utlisateur courrante
 module.exports.getAllMyLeaves = async (req, res) => {
   const userId = req.user.id;
 
@@ -53,16 +67,17 @@ module.exports.getAllMyLeaves = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Erreur interne du serveur" });
   }
-
   res.end();
 };
 
-// UPDATE: Si la demande est encore en ATTENTE
+/**
+ * PUT: controller pour la moficication d'une demande de congé
+ * condition: si la statut de la demande est en ATTENTE
+ */
 module.exports.editLeaveRequest = async (req, res) => {
   const id = req.params.id;
   const { type, dateDebut, dateFin, commentaire } = req.body;
   const userId = req.user.id;
-
   const updates = {};
 
   if (type && dateDebut && dateFin && commentaire) {
@@ -96,7 +111,41 @@ module.exports.editLeaveRequest = async (req, res) => {
   res.end();
 };
 
-// DELETE: Annuler la demande d'un congé
+// PUT: controller pour le traitement d'une demande de congé
+module.exports.treateRequest = async (req, res) => {
+  const { statut } = req.body;
+  const id = req.params.id;
+
+  try {
+    const demande = await Leave.findById(id).populate("employe");
+
+    if (!demande || demande.statut !== "EN_ATTENTE") {
+      return res.status(400).json({
+        message: "Impossible d'effectuer une traitement sur cette demande",
+      });
+    }
+
+    demande.statut = statut;
+    await demande.save();
+
+    if (statut === "ACCEPTEE") {
+      const jours =
+        (demande.dateFin - demande.dateDebut) / (1000 * 60 * 60 * 24) + 1;
+
+      demande.employe.soldeConges -= jours;
+      await demande.employe.save();
+    }
+
+    res.json(demande);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Erreur interne du serveur" });
+  }
+
+  res.end();
+};
+
+// DELETE: controller pour annuler et supprimer une demande de congé
 module.exports.deleteLeave = async (req, res) => {
   const userId = req.user.id;
   const id = req.params.id;

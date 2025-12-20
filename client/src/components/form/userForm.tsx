@@ -70,16 +70,18 @@ const UserForm = ({ initialData, onSubmit }: UserFormProps) => {
               className="w-full border rounded-xl p-2"
             />
           </div>
-          <div className="form-control">
-            <label htmlFor="soldeConges">Solde de congé</label>
-            <input
-              type="number"
-              name="soldeConges"
-              id="soldeConges"
-              defaultValue={initialData?.soldeConges}
-              className="w-full border rounded-xl p-2"
-            />
-          </div>
+          {isEdit ? (
+            <div className="form-control">
+              <label htmlFor="soldeConges">Solde de congé</label>
+              <input
+                type="number"
+                name="soldeConges"
+                id="soldeConges"
+                defaultValue={initialData?.soldeConges}
+                className="w-full border rounded-xl p-2"
+              />
+            </div>
+          ) : null}
           <div className="form-control">
             <label htmlFor="role">Role</label>
             <select

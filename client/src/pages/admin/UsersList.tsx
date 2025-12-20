@@ -2,7 +2,7 @@ import { FaTrash } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
 import type { UserType } from "../../typescript/user";
 import { useState } from "react";
-import { createUser, deleteUser, editUser } from "../../api/admin";
+import { createUser, deleteUser, editUser } from "../../api/user.api";
 import Modal from "../../components/Modal";
 import UserForm from "../../components/form/userForm";
 import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";

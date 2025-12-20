@@ -7,9 +7,9 @@ import {
   editLeaveRequest,
   getMyLeaveRequests,
   postLeaveRequest,
-} from "../../api/employe";
+} from "../../api/leave.api";
 import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
-import { deleteLeaveRequest } from "../../api/employe";
+import { deleteLeaveRequest } from "../../api/leave.api";
 
 const EmployeeDashboard = () => {
   const [leaveRequest, setLeaveRequest] = useState<LeaveRequestType[]>([]);

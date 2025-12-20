@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllUser } from "../../api/admin";
+import { getAllUser } from "../../api/user.api";
 import UserList from "./UsersList";
 import type { UserType } from "../../typescript/user";
 
