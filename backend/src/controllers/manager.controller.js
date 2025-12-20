@@ -11,7 +11,7 @@ module.exports.getAllLeaveRequest = async (req, res) => {
   try {
     const demandes = await Leave.find(filtre)
       .sort(sort === "date" ? { dateDebut: -1 } : {})
-      .populate("employe", "nom email");
+      .populate("employe", "nom prenom email soldeConges");
     res.json(demandes);
   } catch (err) {
     console.log(err);

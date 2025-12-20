@@ -95,6 +95,7 @@ const EmployeeDashboard = () => {
               Demander un congé
             </button>
           </div>
+          
         </div>
 
         <LeaveRequestList
