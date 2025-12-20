@@ -26,9 +26,9 @@ app.use(
 
 // Déclaration des routes
 app.use("/api/auth", require("./routes/auth.routes.js"));
-app.use("/api/users", require("./routes/user.routes.js"));
-app.use("/api/employee", require("./routes/employee.routes.js"));
-app.use("/api/gestionnaire", require("./routes/manager.routes.js"));
+app.use("/api/admin", require("./routes/admin.routes.js"));
+app.use("/api/worker", require("./routes/employee.routes.js"));
+app.use("/api/manager", require("./routes/manager.routes.js"));
 
 app.listen(PORT, () => {
   console.log(`App is running at http://localhost:${PORT}`);

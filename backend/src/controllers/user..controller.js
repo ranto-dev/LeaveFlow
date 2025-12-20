@@ -5,7 +5,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
-// CREATE: créer une utilisateur
+// POST: controller pour la création d'un nouvel utilisateur
 exports.createUser = async (req, res) => {
   const { nom, prenom, email, adresse, motDePasse, role } = req.body;
 
@@ -35,7 +35,7 @@ exports.createUser = async (req, res) => {
   res.end();
 };
 
-// GET: récupérer la liste des utilisateurs
+// GET: controller pour la récupération de la liste des utilisateurs
 module.exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
@@ -46,7 +46,7 @@ module.exports.getAllUsers = async (req, res) => {
   }
 };
 
-// GET: récupérer un utilisateur par son ID
+// GET: controller pour la récupération d'un utilisateur spécifique
 module.exports.findUserById = async (req, res) => {
   const id = req.params.id;
 
@@ -66,7 +66,7 @@ module.exports.findUserById = async (req, res) => {
   res.end();
 };
 
-// PUT: modifier un utilisateur
+// PUT: controller pour la modification et la mise à jour d'un utilisateur
 module.exports.editUserById = async (req, res) => {
   const userId = req.params.id;
 
@@ -108,7 +108,7 @@ module.exports.editUserById = async (req, res) => {
   res.end();
 };
 
-// DELETE: supprimer un utilisateur
+// DELETE: controller pour la suppression d'un utilisateur
 module.exports.deleteUser = async (req, res) => {
   const user = User.findById(req.params.id);
 

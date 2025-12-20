@@ -1,3 +1,7 @@
+/**
+ * Controller pour la gestion d'authentification
+ */
+
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -9,6 +13,7 @@ const cookieOptions = {
   maxAge: 30 * 24 * 60 * 60 * 1000,
 };
 
+// POST: controller pour la création d'une connexion
 module.exports.login = async (req, res) => {
   const { email, motDePasse } = req.body;
 
@@ -31,6 +36,7 @@ module.exports.login = async (req, res) => {
   res.json({ token, role: user.role });
 };
 
+// GET: controller pour la récupération des informations consernant l'utilisateur courrante
 module.exports.getMe = async (req, res) => {
   try {
     res.status(200).json(req.user);
@@ -43,6 +49,7 @@ module.exports.getMe = async (req, res) => {
   res.end();
 };
 
+// POST: controller pour la déconnexion
 module.exports.logout = (req, res) => {
   res.cookie("token", "", { ...cookieOptions, maxAge: 1 });
   res.status(200).json({ message: "Deconnection réussi!" });
