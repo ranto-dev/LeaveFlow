@@ -23,7 +23,7 @@ const LeaveRequestForm = ({ initialData, onSubmit }: LeaveRequestFormProps) => {
   };
 
   return (
-    <div className="card bg-base-100 shadow-xl">
+    <div className="card bg-base-100">
       <div className="card-body space-y-4">
         <h2 className="text-xl font-bold">
           {isEdit

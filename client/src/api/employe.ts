@@ -34,7 +34,7 @@ export async function getMyLeaveRequests(): Promise<LeaveRequestType[]> {
 }
 
 export const editLeaveRequest = async (
-  id: string | undefined,
+  id: string,
   data: Partial<LeaveRequestType>
 ) => {
   await fetch(

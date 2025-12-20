@@ -59,7 +59,7 @@ const EmployeeDashboard = () => {
   };
 
   const handleUpdate = (data: Partial<LeaveRequestType>) => {
-    editLeaveRequest(editing?._id, data);
+    editLeaveRequest(editing?._id as string, data);
     setEditing(null);
     window.location.reload();
   };
