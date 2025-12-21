@@ -1,11 +1,14 @@
+/**
+ * Composant: Tableau pour lister les utiisateurs
+ */
 import { FaTrash } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
 import type { UserType } from "../../typescript/user";
 import { useMemo, useState } from "react";
 import { createUser, deleteUser, editUser } from "../../api/user.api";
-import Modal from "../../components/Modal";
-import UserForm from "../../components/form/userForm";
-import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
+import Modal from "../Modal";
+import UserForm from "../form/userForm";
+import ConfirmDeleteModal from "../ConfirmDeleteModal";
 
 type UserListProps = {
   users: UserType[];

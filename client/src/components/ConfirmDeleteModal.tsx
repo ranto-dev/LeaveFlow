@@ -1,3 +1,6 @@
+/**
+ * Composant: Modal box pour la confirmation de la suppression d'une demande de congé
+ */
 import Modal from "./Modal";
 
 type ConfirmDeleteModalProps = {

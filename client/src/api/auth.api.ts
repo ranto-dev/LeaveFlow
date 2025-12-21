@@ -1,3 +1,6 @@
+/**
+ * API CALL: authentification
+ */
 export interface User {
   _id: string;
   nom: string;
@@ -6,9 +9,7 @@ export interface User {
   role: "EMPLOYE" | "GESTIONNAIRE" | "ADMIN";
 }
 
-/**
- * LOGIN
- */
+// LOGIN
 export async function login(email: string, motDePasse: string) {
   const res = await fetch(
     `http://${window.location.hostname}:3000/api/auth/login`,
@@ -29,9 +30,7 @@ export async function login(email: string, motDePasse: string) {
   return res.json();
 }
 
-/**
- * LOGOUT
- */
+// LOGOUT
 export async function logout() {
   const res = await fetch(
     `http://${window.location.hostname}:3000/api/auth/logout`,
@@ -46,9 +45,7 @@ export async function logout() {
   }
 }
 
-/**
- * GET CURRENT USER
- */
+// GET CURRENT USER
 export async function getMe(): Promise<User> {
   const res = await fetch(
     `http://${window.location.hostname}:3000/api/auth/me`,

@@ -1,34 +1,89 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import Modal from "../Modal";
 
 const DashboardHeader = () => {
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
 
-  const handleLogout = async () => {
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const confirmLogout = async () => {
     try {
+      setLoading(true);
       await logout();
       navigate("/login");
     } catch (err) {
-      console.error("Erreur lors de la déconnexion " + err);
+      console.error("Erreur lors de la déconnexion", err);
+    } finally {
+      setLoading(false);
+      setIsLogoutModalOpen(false);
     }
   };
 
   return (
-    <header>
-      <div className="w-full m-auto container border border-neutral-500/30 shadow-xl rounded-lg p-4 flex justify-between items-center">
-        <div>LeaveFlow</div>
-        <div>
-          <ul className="flex justify-center items-center gap-2">
-            <li>
-              <button onClick={handleLogout} className="btn btn-error btn-sm">
-                Déconnexion
-              </button>
-            </li>
-          </ul>
+    <>
+      <header>
+        <div className="w-full container mx-auto border border-neutral-500/30 shadow-xl rounded-lg p-4 flex justify-between items-center">
+          <div className="text-xl font-bold">LeaveFlow</div>
+
+          <div className="flex items-center gap-4">
+            <div
+              className="tooltip tooltip-bottom"
+              data-tip={user ? `${user.email} - ${user.role}` : ""}
+            >
+              <div className="avatar avatar-online avatar-placeholder cursor-pointer">
+                <div className="bg-primary text-primary-content w-12 rounded-full">
+                  <span className="text-lg font-semibold">
+                    {user?.nom?.slice(0, 2).toUpperCase()}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setIsLogoutModalOpen(true)}
+              className="btn btn-error btn-sm"
+            >
+              Déconnexion
+            </button>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      <Modal
+        isOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+      >
+        <div className="space-y-4 text-center">
+          <h2 className="text-xl font-bold">Confirmer la déconnexion</h2>
+
+          <p className="text-neutral-500">
+            Êtes-vous sûr de vouloir vous déconnecter ?
+          </p>
+
+          <div className="flex justify-center gap-4 pt-4">
+            <button
+              className="btn btn-outline"
+              onClick={() => setIsLogoutModalOpen(false)}
+              disabled={loading}
+            >
+              Annuler
+            </button>
+
+            <button
+              className={`btn btn-error ${loading ? "loading" : ""}`}
+              onClick={confirmLogout}
+              disabled={loading}
+            >
+              {loading ? "Déconnexion..." : "Confirmer"}
+            </button>
+          </div>
+        </div>
+      </Modal>
+    </>
   );
 };
 

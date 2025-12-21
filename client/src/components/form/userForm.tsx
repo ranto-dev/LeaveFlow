@@ -1,3 +1,6 @@
+/**
+ * Composant: formulaire d'ajout et de mofication d'un utilisateur
+ */
 import type { UserType } from "../../typescript/user";
 
 interface UserFormProps {

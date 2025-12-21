@@ -1,3 +1,6 @@
+/**
+ * Authentification provider
+ */
 import { createContext, useContext, useEffect, useState } from "react";
 import * as authApi from "../api/auth.api";
 

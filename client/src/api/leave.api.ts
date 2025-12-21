@@ -1,3 +1,6 @@
+/**
+ * API CALL: demande de congé
+ */
 import type { LeaveRequestType } from "../typescript/requestLeave";
 
 // pour la création d'une nouvelle demande de congé

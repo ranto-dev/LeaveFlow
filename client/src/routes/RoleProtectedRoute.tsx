@@ -1,3 +1,6 @@
+/**
+ * Gestion de sécurité et protection des routes: affichage des pages appropriées
+ */
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import type { Role } from "../typescript/role";

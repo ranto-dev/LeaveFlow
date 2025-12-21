@@ -1,3 +1,6 @@
+/**
+ * Espace pour les GESTIONNAIRES
+ */
 import { useEffect, useState } from "react";
 import type { LeaveRequestType } from "../../typescript/requestLeave";
 import TreateRequestModal from "../../components/TreateRequestModal";

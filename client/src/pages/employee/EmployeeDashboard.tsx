@@ -1,3 +1,6 @@
+/**
+ * Espace pour les EMPLOYES
+ */
 import { useEffect, useState } from "react";
 import LeaveRequestForm from "../../components/form/leaveRequestForm";
 import Modal from "../../components/Modal";
@@ -98,12 +101,6 @@ const EmployeeDashboard = () => {
             </button>
           </div>
         </div>
-
-        {/* <LeaveRequestList
-          leaveRequests={leaveRequest}
-          onEdit={openEditModal}
-          onDelete={openDeleteModal}
-        /> */}
 
         <AllLeaveRequestList
           userRole={user?.role as string}

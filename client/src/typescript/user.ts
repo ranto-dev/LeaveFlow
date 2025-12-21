@@ -1,3 +1,6 @@
+/**
+ * Typage: 
+ */
 export type UserType = {
   _id: string;
   nom: string;

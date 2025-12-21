@@ -1,3 +1,6 @@
+/**
+ * Composant: Diagramme affichant le nombre de demande de congés et leurs statuts
+ */
 import { Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,

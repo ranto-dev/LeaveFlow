@@ -1,3 +1,6 @@
+/**
+ * Composant: Diagramme affichant le nombre d'utilisateur et leurs roles distinctes
+ */
 import { Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,

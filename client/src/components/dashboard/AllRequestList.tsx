@@ -1,3 +1,6 @@
+/**
+ * Composant: Tableau pour lister les utiisateurs
+ */
 import { MdEdit } from "react-icons/md";
 import { useMemo, useState } from "react";
 import type { LeaveRequestType } from "../../typescript/requestLeave";

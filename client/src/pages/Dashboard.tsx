@@ -1,3 +1,7 @@
+/**
+ * Espace utilisateur
+ * -- selon le ROLE de l'utilisateur --
+ */
 import { useAuth } from "../context/AuthContext";
 import DashboardHeader from "../components/dashboard/dashboardHeader";
 import AdminDashboard from "./admin/AdminDashboard";

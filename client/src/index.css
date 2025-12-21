@@ -1,3 +1,4 @@
+/* importation de tailwindcss et daisyUI */
 @import "tailwindcss";
 @plugin "daisyui";
 

@@ -1,8 +1,11 @@
+/**
+ * Page de connexion
+ */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-export default function LoginPage() {
+const LoginPage = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -92,4 +95,6 @@ export default function LoginPage() {
       </div>
     </div>
   );
-}
+};
+
+export default LoginPage;

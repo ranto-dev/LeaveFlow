@@ -1,6 +1,9 @@
+/**
+ * Espace pour les ADMINISTRATEURS
+ */
 import { useEffect, useState } from "react";
 import { getAllUser } from "../../api/user.api";
-import UserList from "./UsersList";
+import UserList from "../../components/dashboard/UsersList";
 import type { UserType } from "../../typescript/user";
 import type { LeaveRequestType } from "../../typescript/requestLeave";
 import { getAllLeaveRequest } from "../../api/leave.api";
