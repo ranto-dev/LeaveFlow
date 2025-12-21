@@ -55,8 +55,8 @@ const AllLeaveRequestList = ({
       <div className="flex justify-between items-center flex-wrap gap-4 mb-6">
         <input
           type="text"
-          placeholder="Rechercher un nom ou une prénom"
-          className="input input-bordered w-full md:w-64"
+          placeholder="Rechercher un nom ou un prénom"
+          className="input input-bordered border-white w-full md:w-64"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -86,7 +86,7 @@ const AllLeaveRequestList = ({
           className="btn btn-outline"
           onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
         >
-          Triage {sortOrder === "asc" ? "Ascendant ↑" : "Descendant ↓"}
+          Triage {sortOrder === "asc" ? "Ascendant" : "Descendant"}
         </button>
       </div>
       <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
