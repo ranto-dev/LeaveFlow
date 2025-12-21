@@ -16,9 +16,13 @@ export async function postLeaveRequest(request: Partial<LeaveRequestType>) {
 }
 
 // pour la récupération de toute la liste des demandes de congé
-export const getAllLeaveRequest = async () => {
+export const getAllLeaveRequest = async (userRole: string) => {
   const response = await fetch(
-    `http://${window.location.hostname}:3000/api/manager/leaves/all`,
+    `${
+      userRole === "ADMIN"
+        ? `http://${window.location.hostname}:3000/api/admin/leaves/all`
+        : `http://${window.location.hostname}:3000/api/manager/leaves/all`
+    }`,
     {
       method: "GET",
       credentials: "include",

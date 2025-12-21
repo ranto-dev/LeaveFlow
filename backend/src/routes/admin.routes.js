@@ -2,6 +2,7 @@
  * Route pour les administrateurs de l'application
  */
 
+const { getAllLeaveRequest } = require("../controllers/leave.controller.js");
 const {
   createUser,
   getAllUsers,
@@ -30,5 +31,8 @@ router.put("/user/edit/:id", editUserById);
 
 // route pour la suppression d'un utilisateur
 router.delete("/user/delete/:id", deleteUser);
+
+// route pour la récupération de la liste des demandes de congé
+router.get("/leaves/all", getAllLeaveRequest);
 
 module.exports = router;

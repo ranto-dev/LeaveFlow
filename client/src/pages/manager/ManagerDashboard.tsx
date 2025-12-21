@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import type { LeaveRequestType } from "../../typescript/requestLeave";
-import AllLeaveRequestList from "./AllLeaveRequestList";
 import TreateRequestModal from "../../components/TreateRequestModal";
 import { getAllLeaveRequest, treateLeaveRequest } from "../../api/leave.api";
+import { useAuth } from "../../context/AuthContext";
+import AllLeaveRequestList from "../../components/dashboard/AllRequestList";
+import LeaveStatusDoughnutChart from "../../components/charts/LeaveStatusDoughnutChart";
 
 const ManagerDashboard = () => {
   const [leaveRequest, setLeaveRequest] = useState<LeaveRequestType[]>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [treating, setTreating] = useState<LeaveRequestType | null>(null);
+  const { user } = useAuth();
 
   const openTreateModal = (request: LeaveRequestType) => {
     setTreating(request);
@@ -25,7 +28,7 @@ const ManagerDashboard = () => {
   useEffect(() => {
     const loadLeaveRequests = async () => {
       try {
-        const data = await getAllLeaveRequest();
+        const data = await getAllLeaveRequest(user?.role as string);
         setLeaveRequest(data);
         setIsLoaded(true);
       } catch (err) {
@@ -34,7 +37,7 @@ const ManagerDashboard = () => {
     };
 
     loadLeaveRequests();
-  }, []);
+  }, [user]);
 
   if (isLoaded === false) {
     return <div>loading ...</div>;
@@ -49,9 +52,15 @@ const ManagerDashboard = () => {
             <p className="mt-4">Gestion et suivi des demandes de congé.</p>
           </div>
         </div>
+
+        <div className="flex justify-center items-center">
+          <LeaveStatusDoughnutChart leaves={leaveRequest} />
+        </div>
+
         <AllLeaveRequestList
-          onTreate={openTreateModal}
+          userRole={user?.role as string}
           leaveRequests={leaveRequest}
+          onTreate={openTreateModal}
         />
       </div>
       <TreateRequestModal

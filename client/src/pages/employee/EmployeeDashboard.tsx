@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import LeaveRequestForm from "../../components/form/leaveRequestForm";
 import Modal from "../../components/Modal";
 import type { LeaveRequestType } from "../../typescript/requestLeave";
-import LeaveRequestList from "./LeaveRequestList";
 import {
   editLeaveRequest,
   getMyLeaveRequests,
@@ -10,6 +9,8 @@ import {
 } from "../../api/leave.api";
 import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
 import { deleteLeaveRequest } from "../../api/leave.api";
+import AllLeaveRequestList from "../../components/dashboard/AllRequestList";
+import { useAuth } from "../../context/AuthContext";
 
 const EmployeeDashboard = () => {
   const [leaveRequest, setLeaveRequest] = useState<LeaveRequestType[]>([]);
@@ -18,6 +19,7 @@ const EmployeeDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleting, setDeleting] = useState<LeaveRequestType | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const { user } = useAuth();
 
   const openCreateModal = () => {
     setEditing(null);
@@ -84,7 +86,7 @@ const EmployeeDashboard = () => {
 
   return (
     <>
-      <div className="container space-y-10 m-auto my-4 border border-neutral-500/20 shadowzy rounded-xl  p-10">
+      <div className="container space-y-10 m-auto my-4 border border-neutral-500/20 shadow rounded-xl  p-10">
         <div className="flex justify-between items-start">
           <div>
             <h1 className="text-3xl font-bold">Dashboard Employé</h1>
@@ -97,7 +99,14 @@ const EmployeeDashboard = () => {
           </div>
         </div>
 
-        <LeaveRequestList
+        {/* <LeaveRequestList
+          leaveRequests={leaveRequest}
+          onEdit={openEditModal}
+          onDelete={openDeleteModal}
+        /> */}
+
+        <AllLeaveRequestList
+          userRole={user?.role as string}
           leaveRequests={leaveRequest}
           onEdit={openEditModal}
           onDelete={openDeleteModal}
