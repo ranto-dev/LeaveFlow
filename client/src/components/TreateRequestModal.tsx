@@ -1,3 +1,6 @@
+/**
+ * Composant: Modal box pour traitement d'une demande de congé
+ */
 import type { LeaveRequestType } from "../typescript/requestLeave";
 import Modal from "./Modal";
 

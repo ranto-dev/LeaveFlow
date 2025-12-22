@@ -1,8 +1,10 @@
+/**
+ * Espace pour les EMPLOYES
+ */
 import { useEffect, useState } from "react";
 import LeaveRequestForm from "../../components/form/leaveRequestForm";
 import Modal from "../../components/Modal";
 import type { LeaveRequestType } from "../../typescript/requestLeave";
-import LeaveRequestList from "./LeaveRequestList";
 import {
   editLeaveRequest,
   getMyLeaveRequests,
@@ -10,6 +12,8 @@ import {
 } from "../../api/leave.api";
 import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
 import { deleteLeaveRequest } from "../../api/leave.api";
+import AllLeaveRequestList from "../../components/dashboard/AllRequestList";
+import { useAuth } from "../../context/AuthContext";
 
 const EmployeeDashboard = () => {
   const [leaveRequest, setLeaveRequest] = useState<LeaveRequestType[]>([]);
@@ -18,6 +22,7 @@ const EmployeeDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleting, setDeleting] = useState<LeaveRequestType | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const { user } = useAuth();
 
   const openCreateModal = () => {
     setEditing(null);
@@ -55,13 +60,11 @@ const EmployeeDashboard = () => {
 
   const handleCreate = (data: Partial<LeaveRequestType>) => {
     postLeaveRequest(data);
-    window.location.reload();
   };
 
   const handleUpdate = (data: Partial<LeaveRequestType>) => {
     editLeaveRequest(editing?._id as string, data);
     setEditing(null);
-    window.location.reload();
   };
 
   useEffect(() => {
@@ -84,22 +87,37 @@ const EmployeeDashboard = () => {
 
   return (
     <>
-      <div className="container space-y-10 m-auto my-4 border border-neutral-500/20 shadowzy rounded-xl  p-10">
+      <div className="container space-y-10 m-auto my-4 border border-neutral-500/20 shadow rounded-xl  p-10">
         <div className="flex justify-between items-start">
           <div>
             <h1 className="text-3xl font-bold">Dashboard Employé</h1>
             <p className="mt-4">Soumission et suivi de vos congés.</p>
           </div>
-          <div>
+          <div className="flex justify-end items-center gap-4">
+            <div>
+              Votre solde actuel:{" "}
+              <span
+                className={`text-2xl ${
+                  user?.soldeConges !== undefined && user?.soldeConges > 5
+                    ? "text-primary"
+                    : "text-warning"
+                }`}
+              >
+                {user?.soldeConges !== undefined && user?.soldeConges > 10
+                  ? null
+                  : "0"}
+                {user?.soldeConges}
+              </span>
+            </div>
             <button onClick={openCreateModal} className="btn btn-primary">
               Demander un congé
             </button>
           </div>
-          
         </div>
 
-        <LeaveRequestList
-          leaveRequest={leaveRequest}
+        <AllLeaveRequestList
+          userRole={user?.role as string}
+          leaveRequests={leaveRequest}
           onEdit={openEditModal}
           onDelete={openDeleteModal}
         />

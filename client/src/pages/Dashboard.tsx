@@ -1,3 +1,7 @@
+/**
+ * Espace utilisateur
+ * -- selon le ROLE de l'utilisateur --
+ */
 import { useAuth } from "../context/AuthContext";
 import DashboardHeader from "../components/dashboard/dashboardHeader";
 import AdminDashboard from "./admin/AdminDashboard";
@@ -25,7 +29,6 @@ const DashboardRoleDisplay = ({ role }: DashboardRoleDisplayProps) => {
 
 const Dashboard = () => {
   const { user } = useAuth();
-  console.log(user);
 
   return (
     <>

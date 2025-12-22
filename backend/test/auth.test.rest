@@ -1,0 +1,23 @@
+#
+# Test - AUTHENTIFICATION
+#
+
+# Connexion - test
+POST http://localhost:3000/api/auth/login
+Content-Type: "application/json"
+
+{
+    "email": "rantoandrianandraina@gmail.com",
+    "motDePasse": "ranto123"
+}
+
+###
+# Deconnexion - test
+POST http://localhost:3000/api/auth/logout
+Authorization: Bearer userToken
+Content-Type: "application/json"
+
+###
+## Récupération de l'utilisateur courrant - test
+GET http://localhost:3000/api/auth/me
+Authorization: Bearer userToken

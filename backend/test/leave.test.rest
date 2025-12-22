@@ -1,0 +1,49 @@
+#
+# Test - Gestion de demande de congé
+#
+
+# pour la création d'une nouvelle demande de congé
+POST http://localhost:3000/api/worker/leave/request
+Content-Type: "application/json"
+Authorization: Bearer userToken
+
+{
+    "type": "Absence",
+    "dateDebut": "24-12-2025",
+    "dateFin": "02-01-2026",
+    "commentaire": "ceci est une commentaire pour cette demande de congé"
+}
+
+###
+# pour la récupération de toute la liste des demandes de congé
+GET http://localhost:3000/api/manager/leaves/all
+Authorization: Bearer userToken
+
+###
+# pour récupérer tous les demandes de congé de l'utilisateur courrant 
+GET http://localhost:3000/api/worker/leaves
+Authorization: Bearer userToken
+
+###
+# pour mettre à jour et modifier une demande de congé
+PUT http://localhost:3000/api/worker/leave/#idLeaave
+Content-Type: : "application/json"
+Authorization: Bearer userToken
+
+{
+    "type": "vacances",
+    "dateDebut": "24-12-2025",
+    "dateFin": "02-01-2026",
+    "commentaire": "ceci est la nouvelle commentaire pour cette demande de congé"
+}
+
+###
+# traitement d'une demande de congé
+PUT http://localhost:3000/api/manager/leave/treate/#idLeaave
+Content-Type: : "application/json"
+Authorization: Bearer userToken
+
+###
+# suppression d'une demande de congé
+DELETE http://localhost:3000/api/worker/leave/#idLeaave
+Authorization: Bearer userToken

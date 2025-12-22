@@ -1,3 +1,6 @@
+/**
+ * Typage: demande de congé
+ */
 export type LeaveRequestType = {
   _id?: string;
   type: string;

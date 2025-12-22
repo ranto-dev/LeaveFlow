@@ -1,0 +1,43 @@
+#
+# Test - Gestion des utilisateurs
+#
+
+# pour la création d'un nouvel utilisateur
+POST http://localhost:3000/api/admin/user/create
+Content-Type: "application/json"
+Authorization: Bearer userToken
+
+{
+    "nom": "John",
+    "prenom": "Doe",
+    "email": "johndoe@gmail.com",
+    "adresse": "15e Rue, Paris - France",
+    "soldeConges": 20,
+    "role": "EMPLOYE"
+}
+
+###
+# pour récupérer toute la liste des utilisateurs
+GET http://localhost:3000/api/admin/users/all
+Authorization: Bearer userToken
+
+
+###
+# pour mettre à jour et modifier un utilisateur
+PUT http://localhost:3000/api/admin/user/edit/#idUser
+Content-Type: : "application/json"
+Authorization: Bearer userToken
+
+{
+    "nom": "John",
+    "prenom": "Doe",
+    "email": "johndoe15@gmail.com",
+    "adresse": "15e Rue, Paris - France",
+    "soldeConges": 20,
+    "role": "EMPLOYE"
+}
+
+###
+# suppression d'une demande de congé
+DELETE http://localhost:3000/api/admin/user/delete/#idUser
+Authorization: Bearer userToken

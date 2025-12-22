@@ -1,5 +1,9 @@
+/**
+ * API CALL: utilisateur
+ */
 import type { UserType } from "../typescript/user";
 
+// pour récupérer toute la liste des utilisateurs
 export const getAllUser = async () => {
   const response = await fetch(
     `http://${window.location.hostname}:3000/api/admin/users/all`,
@@ -16,6 +20,7 @@ export const getAllUser = async () => {
   return response.json();
 };
 
+// pour la création d'une nouvelle utilisateur
 export const createUser = async (user: Partial<UserType>) => {
   await fetch(`http://${window.location.hostname}:3000/api/admin/user/create`, {
     method: "POST",
@@ -30,6 +35,7 @@ export const createUser = async (user: Partial<UserType>) => {
     .catch((err) => console.error(err));
 };
 
+// pour la modification d'un utilisateur
 export const editUser = async (id: string, data: Partial<UserType>) => {
   await fetch(
     `http://${window.location.hostname}:3000/api/admin/user/edit/${id}`,
@@ -47,6 +53,7 @@ export const editUser = async (id: string, data: Partial<UserType>) => {
     .catch((err) => console.error(err));
 };
 
+// pour la suppression d'un utilisateur
 export const deleteUser = async (id: string) => {
   await fetch(
     `http://${window.location.hostname}:3000/api/admin/user/delete/${id}`,

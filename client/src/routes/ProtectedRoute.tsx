@@ -1,3 +1,6 @@
+/**
+ * Gestion de sécurité et protection des routes: redirection instantanée
+ */
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import type { JSX } from "react";

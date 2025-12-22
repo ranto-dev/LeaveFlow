@@ -1,3 +1,6 @@
+/**
+ * Composant: Formulaire de création et de motification d'une demande de congé
+ */
 import type { LeaveRequestType } from "../../typescript/requestLeave";
 
 interface LeaveRequestFormProps {

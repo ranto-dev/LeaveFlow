@@ -1,24 +1,37 @@
+/**
+ * API CALL: demande de congé
+ */
 import type { LeaveRequestType } from "../typescript/requestLeave";
 
 // pour la création d'une nouvelle demande de congé
 export async function postLeaveRequest(request: Partial<LeaveRequestType>) {
-  await fetch(`http://${window.location.hostname}:3000/api/worker/request`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify(request),
-  })
+  await fetch(
+    `http://${window.location.hostname}:3000/api/worker/leave/request`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(request),
+    }
+  )
     .then((response) => response.json())
-    .then((response) => console.log(response))
+    .then((response) => {
+      alert(response.message);
+      window.location.reload();
+    })
     .catch((err) => console.error(err));
 }
 
 // pour la récupération de toute la liste des demandes de congé
-export const getAllLeaveRequest = async () => {
+export const getAllLeaveRequest = async (userRole: string) => {
   const response = await fetch(
-    `http://${window.location.hostname}:3000/api/manager/leaves/all`,
+    `${
+      userRole === "ADMIN"
+        ? `http://${window.location.hostname}:3000/api/admin/leaves/all`
+        : `http://${window.location.hostname}:3000/api/manager/leaves/all`
+    }`,
     {
       method: "GET",
       credentials: "include",
@@ -66,7 +79,10 @@ export const editLeaveRequest = async (
     }
   )
     .then((response) => response.json())
-    .then((response) => console.log(response))
+    .then((response) => {
+      alert(response.message);
+      window.location.reload();
+    })
     .catch((err) => console.error(err));
 };
 

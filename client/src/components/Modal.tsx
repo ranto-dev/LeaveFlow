@@ -1,3 +1,6 @@
+/**
+ * Composant: Modal box
+ */
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { FaTimes } from "react-icons/fa";

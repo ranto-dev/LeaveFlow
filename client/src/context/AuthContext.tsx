@@ -1,8 +1,12 @@
+/**
+ * Authentification provider
+ */
 import { createContext, useContext, useEffect, useState } from "react";
 import * as authApi from "../api/auth.api";
+import type { UserType } from "../typescript/user";
 
 interface AuthContextType {
-  user: authApi.User | null;
+  user: UserType | null;
   loading: boolean;
   login: (email: string, motDePasse: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -11,7 +15,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<authApi.User | null>(null);
+  const [user, setUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
