@@ -144,7 +144,7 @@ volumes:
   mongo_data:
 ```
 
-### 4. **Ajout de workflows**
+### 4. **Le workflows avec github actions**
 
 Actuellement, il est important de penser à ajouter un `workflows` permettant de faire ce qu'on appel `CI` c'et-à-dire Continuous Integration. Dans notre cas, on se content tout simplement de run des tests unitaires et une build d'image. Ces actions se déclanchent uniquement si
 

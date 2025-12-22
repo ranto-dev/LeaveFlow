@@ -53,7 +53,7 @@ une application simple et fonctionnelle permettant
 - **backend**: Node & Express.js
 - **base de donnée**: MongoDB
 - **API testing**: Extension de VSCode - Rest client et insomnia
-- **Continuous Integration**: Docker, Git, GitHub
+- **Continuous Integration**: Docker, Git, GitHub Actions
 
 ### IV. Livrable
 

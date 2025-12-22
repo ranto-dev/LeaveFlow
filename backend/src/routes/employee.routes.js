@@ -15,7 +15,7 @@ const role = require("../middlewares/role.middleware");
 router.use(protect, role("EMPLOYE"));
 
 // route pour la création d'une demande de congé
-router.post("/request", requestLeave);
+router.post("/leave/request", requestLeave);
 
 // route poure la récupération pour la récupération de la liste des demandes de congé d'un emplyé spécifique
 router.get("/leaves", getAllMyLeaves);
