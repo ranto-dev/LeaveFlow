@@ -47,6 +47,12 @@ une application simple et fonctionnelle permettant
   - ainsi que la suppréssion
   - Diagramme des utilisattions par rapport à leurs roles
 
+## III. Fonctionnalité a venir
+
+- gestion de notification en temps réelle
+- authentification à double facteur
+- amélioration de l'UI Design (toast de confirmation, animation avec framer-motion)
+
 ## III. Stack
 
 - **frontend**: Tailwindcss & DaisyUI / Typescript & React.js avec framer motion
@@ -58,5 +64,5 @@ une application simple et fonctionnelle permettant
 ### IV. Livrable
 
 - Code source complet sur [ce repositorie](https://github.com/ranto-dev/LeaveFlow.git)
-- Documentation d'installaton (le fichier `docs/comment ça marche.md`)
-- Explication de l'architecture ( répértoire de conception `docs/FAQ.md`)
+- Documentation d'installaton (le fichier [`docs/comment ça marche.md`](./docs/comment%20ça%20marche.md))
+- Explication de l'architecture ( répértoire de conception [`docs/FAQ.md`](./docs/FAQ.md))
