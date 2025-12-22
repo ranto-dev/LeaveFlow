@@ -1,0 +1,62 @@
+[
+  {
+    "type": "vacance",
+    "dateDebut": "2026-01-10",
+    "dateFin": "2026-01-15",
+    "commentaire": "Repos annuel pour la nouvelle année."
+  },
+  {
+    "type": "absence",
+    "dateDebut": "2026-02-05",
+    "dateFin": "2026-02-05",
+    "commentaire": "Rendez-vous à la banque."
+  },
+  {
+    "type": "maladie",
+    "dateDebut": "2026-03-12",
+    "dateFin": "2026-03-15",
+    "commentaire": "Arrêt médical pour grippe."
+  },
+  {
+    "type": "vacance",
+    "dateDebut": "2026-04-01",
+    "dateFin": "2026-04-10",
+    "commentaire": "Voyage en province."
+  },
+  {
+    "type": "absence",
+    "dateDebut": "2026-05-20",
+    "dateFin": "2026-05-21",
+    "commentaire": "Affaires familiales urgentes."
+  },
+  {
+    "type": "maladie",
+    "dateDebut": "2026-06-15",
+    "dateFin": "2026-06-16",
+    "commentaire": "Indisposition temporaire."
+  },
+  {
+    "type": "vacance",
+    "dateDebut": "2026-08-01",
+    "dateFin": "2026-08-15",
+    "commentaire": "Vacances d'été."
+  },
+  {
+    "type": "absence",
+    "dateDebut": "2026-09-10",
+    "dateFin": "2026-09-11",
+    "commentaire": "Démarches administratives."
+  },
+  {
+    "type": "maladie",
+    "dateDebut": "2026-10-05",
+    "dateFin": "2026-10-07",
+    "commentaire": "Consultation spécialisée."
+  },
+  {
+    "type": "vacance",
+    "dateDebut": "2026-12-24",
+    "dateFin": "2026-12-31",
+    "commentaire": "Fêtes de fin d'année."
+  }
+]

@@ -1,6 +1,3 @@
-/**
- * Espace pour les ADMINISTRATEURS
- */
 import { useEffect, useState } from "react";
 import { getAllUser } from "../../api/user.api";
 import UserList from "../../components/dashboard/UsersList";
@@ -14,17 +11,19 @@ import LeaveStatusDoughnutChart from "../../components/charts/LeaveStatusDoughnu
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState<UserType[]>([]);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-
   const [leaveRequest, setLeaveRequest] = useState<LeaveRequestType[]>([]);
+  const [isUsersLoaded, setIsUsersLoaded] = useState(false);
+  const [isLeaveLoaded, setIsLeaveLoaded] = useState(false);
+
   const { user } = useAuth();
 
   useEffect(() => {
+    if (!user?.role) return; // sécurité
     const loadLeaveRequests = async () => {
       try {
-        const data = await getAllLeaveRequest(user?.role as string);
+        const data = await getAllLeaveRequest(user.role);
         setLeaveRequest(data);
-        setIsLoaded(true);
+        setIsLeaveLoaded(true);
       } catch (err) {
         console.error(err);
       }
@@ -38,7 +37,7 @@ const AdminDashboard = () => {
       try {
         const data = await getAllUser();
         setUsers(data);
-        setIsLoaded(true);
+        setIsUsersLoaded(true);
       } catch (err) {
         console.error(err);
       }
@@ -47,37 +46,36 @@ const AdminDashboard = () => {
     loadAllUsers();
   }, []);
 
-  if (isLoaded === false) {
+  if (!isUsersLoaded || !isLeaveLoaded) {
     return <div>loading ...</div>;
   }
 
   return (
-    <>
-      <div className="container space-y-10 m-auto my-4 mb-24 border border-neutral-500/20 shadowzy rounded-xl  p-10">
-        <div className="flex justify-center items-center text-center">
-          <div>
-            <h1 className="text-3xl font-bold">Dashboard Administateur</h1>
-            <p className="mt-4">
-              Gérer les utilisateurs et consulter les demandes de congé.
-            </p>
-          </div>
-        </div>
-
-        <div className="space-y-20">
-          <div className="flex justify-center">
-            <UserRoleDoughnutChart users={users} />
-            <LeaveStatusDoughnutChart leaves={leaveRequest} />
-          </div>
-
-          <AllLeaveRequestList
-            leaveRequests={leaveRequest}
-            userRole={user?.role as string}
-          />
-
-          <UserList users={users} />
+    <div className="container space-y-10 m-auto my-4 mb-24 border border-neutral-500/20 shadowzy rounded-xl p-10">
+      <div className="flex justify-center items-center text-center">
+        <div>
+          <h1 className="text-3xl font-bold">Dashboard Administrateur</h1>
+          <p className="mt-4">
+            Gérer les utilisateurs et consulter les demandes de congé.
+          </p>
         </div>
       </div>
-    </>
+
+      <div className="space-y-20">
+        <div className="flex justify-center gap-10">
+          <UserRoleDoughnutChart users={users} />
+          <LeaveStatusDoughnutChart leaves={leaveRequest} />
+        </div>
+
+        <AllLeaveRequestList
+          leaveRequests={leaveRequest}
+          userRole={user?.role}
+        />
+
+        <UserList users={users} />
+      </div>
+    </div>
   );
 };
+
 export default AdminDashboard;

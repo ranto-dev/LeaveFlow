@@ -1,0 +1,82 @@
+[
+  {
+    "nom": "Rakotomalala",
+    "prenom": "Faniry",
+    "email": "faniry@gmail.com",
+    "adresse": "Ambohimanarina",
+    "motDePasse": "faniry123",
+    "role": "EMPLOYE"
+  },
+  {
+    "nom": "Razafindrakoto",
+    "prenom": "Mialy",
+    "email": "mialy@gmail.com",
+    "adresse": "Itaosy",
+    "motDePasse": "mialy2025",
+    "role": "GESTIONNAIRE"
+  },
+  {
+    "nom": "Andrianarivo",
+    "prenom": "Toky",
+    "email": "toky@gmail.com",
+    "adresse": "Analamahitsy",
+    "motDePasse": "toky_pass",
+    "role": "EMPLOYE"
+  },
+  {
+    "nom": "Ramanantsoa",
+    "prenom": "Voary",
+    "email": "voary@gmail.com",
+    "adresse": "Talatamaty",
+    "motDePasse": "voary_99",
+    "role": "GESTIONNAIRE"
+  },
+  {
+    "nom": "Rabe",
+    "prenom": "Solofo",
+    "email": "solofo@gmail.com",
+    "adresse": "Isoraka",
+    "motDePasse": "solofopwd",
+    "role": "EMPLOYE"
+  },
+  {
+    "nom": "Randrianasolo",
+    "prenom": "Nomena",
+    "email": "nomena@gmail.com",
+    "adresse": "Ivato",
+    "motDePasse": "nomena25",
+    "role": "EMPLOYE"
+  },
+  {
+    "nom": "Rakotoarisoa",
+    "prenom": "Sitraka",
+    "email": "sitraka@gmail.com",
+    "adresse": "Mahamasina",
+    "motDePasse": "sitraka_01",
+    "role": "GESTIONNAIRE"
+  },
+  {
+    "nom": "Rasolofomanana",
+    "prenom": "Hery",
+    "email": "hery@gmail.com",
+    "adresse": "67ha",
+    "motDePasse": "hery_top",
+    "role": "EMPLOYE"
+  },
+  {
+    "nom": "Andriamanantena",
+    "prenom": "Lova",
+    "email": "lova@gmail.com",
+    "adresse": "Ampasampito",
+    "motDePasse": "lova_pass",
+    "role": "EMPLOYE"
+  },
+  {
+    "nom": "Rakotonirina",
+    "prenom": "Finoana",
+    "email": "finoana@gmail.com",
+    "adresse": "Behoririka",
+    "motDePasse": "finoana123",
+    "role": "GESTIONNAIRE"
+  }
+]

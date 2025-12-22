@@ -89,8 +89,8 @@ CLIENT_URI=http://localhost:5173
 
 Ensite on peut le lancer
 
-- le frontend dans un navigateur via l'url [http://]()
-- tester l'api backend via l'url []()
+- le frontend dans un navigateur via l'url [http://localhost:5173](http://localhost:5173)
+- tester l'api backend via l'url [http://localhost:3000](http://localhost:3000)
 - lancer `mongodb cli` via la commande suivante
 
   ```bash
@@ -103,3 +103,19 @@ Ensite on peut le lancer
   # Executer une commande de test
   > show dbs
   ```
+
+### 4. Premier contact avec l'application
+
+Par default, notre base de donne est vide. Sauf, il existe déjà un ADMIN par default
+
+```raw
+email: rantoandrianandraina@gmail.com
+mot de passe : ranto123
+```
+
+Pour que vous puissiez bénéficier des fonctionnalités de l'application, il faudra que vous ajoutiez plusieurs utilisateurs dont leur role est varié.
+
+Pour que vous ne soit pas embéter à trouver des données fictife,
+
+- Base de test pour les utilisateurs: fichier [`/docs/user.json`](./user.json).
+- Base de test pour les demandes de congé: fichier [`/docs/leaveRequest.json`](./leaveRequest.json)
