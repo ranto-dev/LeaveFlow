@@ -84,7 +84,7 @@ const UserList = ({ users }: UserListProps) => {
   const handleCreate = (data: Partial<UserType>) => {
     console.log(data);
     createUser(data);
-    window.location.reload();
+   // window.location.reload();
   };
 
   const handleUpdate = (data: Partial<UserType>) => {

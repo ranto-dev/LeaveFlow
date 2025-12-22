@@ -4,7 +4,7 @@
 import { MdEdit } from "react-icons/md";
 import { useMemo, useState } from "react";
 import type { LeaveRequestType } from "../../typescript/requestLeave";
-import { FaTrash } from "react-icons/fa6";
+import { FaHourglass, FaTrash } from "react-icons/fa6";
 import Modal from "../Modal";
 
 type AllLeaveRequestListProps = {
@@ -198,7 +198,7 @@ const AllLeaveRequestList = ({
                             }
                             onClick={() => onTreate(request)}
                           >
-                            <MdEdit />
+                            <FaHourglass />
                           </button>
                         </td>
                       ) : (

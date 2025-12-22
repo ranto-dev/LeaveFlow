@@ -23,7 +23,15 @@ const UserForm = ({ initialData, onSubmit }: UserFormProps) => {
       role: formData.get("role") as string,
     };
 
-    onSubmit(data);
+    if (isEdit === false) {
+      const dataCreate = {
+        ...data,
+        motDePasse: formData.get("motDePasse") as string,
+      };
+      onSubmit(dataCreate);
+    } else {
+      onSubmit(data);
+    }
   };
 
   return (

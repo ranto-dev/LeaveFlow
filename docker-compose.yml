@@ -11,7 +11,9 @@ services:
       - mongo_data:/data/db
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: leaveflow-backend
     restart: always
     env_file:
@@ -25,7 +27,9 @@ services:
       - /app/node_modules
 
   frontend:
-    build: ./client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
     container_name: leaveflow-frontend
     restart: always
     ports:
@@ -33,7 +37,7 @@ services:
     depends_on:
       - backend
     volumes:
-      - ./frontend:/app
+      - ./client:/app
       - /app/node_modules
 
 volumes:
