@@ -9,11 +9,11 @@ Pour ce projet, on a choisi la notation `UML` pour modéliser de manière unifie
 
 ### 1. Diagramme de cas d'utilisation
 
-<img src="./conception/LeaveFlow - Diagramme de cas d&apos;utilisation.jpg" alt="diagramme de cas d'utilisation" width="100%" />
+<img src="./conception/LeaveFlow - use case diagram.jpg" alt="diagramme de cas d'utilisation" width="100%" />
 
 ### 2. Digramme de classe
 
-<img src="./conception/LeaveFlow - diagramme de classe.jpg" alt="diagramme de classe" width="100%" />
+<img src="./conception/LeaveFlow - class diagram.jpg" alt="diagramme de classe" width="100%" />
 
 ## II. Architecture techniqeue
 
