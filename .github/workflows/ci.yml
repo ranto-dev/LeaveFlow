@@ -30,7 +30,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ---------------- BACKEND ----------------
       - name: Setup Node.js (backend)
         uses: actions/setup-node@v4
         with:
@@ -47,7 +46,6 @@ jobs:
         run: |
           node -e "require('./src/config/db')()"
 
-      # ---------------- FRONTEND ----------------
       - name: Setup Node.js (frontend)
         uses: actions/setup-node@v4
         with:
@@ -56,9 +54,9 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install frontend dependencies
-        working-directory: frontend
+        working-directory: client
         run: npm install
 
       - name: Build frontend
-        working-directory: frontend
+        working-directory: client
         run: npm run build

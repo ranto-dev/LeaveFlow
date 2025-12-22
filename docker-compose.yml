@@ -25,7 +25,7 @@ services:
       - /app/node_modules
 
   frontend:
-    build: ./frontend
+    build: ./client
     container_name: leaveflow-frontend
     restart: always
     ports:
