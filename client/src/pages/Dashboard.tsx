@@ -29,7 +29,6 @@ const DashboardRoleDisplay = ({ role }: DashboardRoleDisplayProps) => {
 
 const Dashboard = () => {
   const { user } = useAuth();
-  console.log(user);
 
   return (
     <>

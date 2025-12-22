@@ -60,13 +60,11 @@ const EmployeeDashboard = () => {
 
   const handleCreate = (data: Partial<LeaveRequestType>) => {
     postLeaveRequest(data);
-    window.location.reload();
   };
 
   const handleUpdate = (data: Partial<LeaveRequestType>) => {
     editLeaveRequest(editing?._id as string, data);
     setEditing(null);
-    window.location.reload();
   };
 
   useEffect(() => {
@@ -95,7 +93,22 @@ const EmployeeDashboard = () => {
             <h1 className="text-3xl font-bold">Dashboard Employé</h1>
             <p className="mt-4">Soumission et suivi de vos congés.</p>
           </div>
-          <div>
+          <div className="flex justify-end items-center gap-4">
+            <div>
+              Votre solde actuel:{" "}
+              <span
+                className={`text-2xl ${
+                  user?.soldeConges !== undefined && user?.soldeConges > 5
+                    ? "text-primary"
+                    : "text-warning"
+                }`}
+              >
+                {user?.soldeConges !== undefined && user?.soldeConges > 10
+                  ? null
+                  : "0"}
+                {user?.soldeConges}
+              </span>
+            </div>
             <button onClick={openCreateModal} className="btn btn-primary">
               Demander un congé
             </button>

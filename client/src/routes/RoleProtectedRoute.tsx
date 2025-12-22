@@ -18,7 +18,7 @@ export function RoleProtectedRoute({ role, children }: Props) {
   if (!user) return <Navigate to="/login" />;
 
   const allowed = Array.isArray(role)
-    ? role.includes(user.role)
+    ? role.includes(user.role as never)
     : user.role === role;
 
   return allowed ? children : <Navigate to="/unauthorized" />;

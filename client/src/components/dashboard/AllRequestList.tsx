@@ -5,6 +5,7 @@ import { MdEdit } from "react-icons/md";
 import { useMemo, useState } from "react";
 import type { LeaveRequestType } from "../../typescript/requestLeave";
 import { FaTrash } from "react-icons/fa6";
+import Modal from "../Modal";
 
 type AllLeaveRequestListProps = {
   leaveRequests: LeaveRequestType[];
@@ -24,6 +25,39 @@ const AllLeaveRequestList = ({
   const [typeFilter, setTypeFilter] = useState("");
   const [sortKey, setSortKey] = useState<"dateDebut" | "dateFin">("dateDebut");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [modalText, setModalText] = useState<string>("");
+
+  const openModal = (request: LeaveRequestType) => {
+    setIsOpenModal(true);
+    setModalText(request.commentaire as string);
+  };
+
+  const closeModal = () => {
+    setIsOpenModal(false);
+    setModalText("");
+  };
+
+  const rendreContent = () => {
+    if (modalText === "") {
+      return null;
+    }
+    return (
+      <div className="space-y-4">
+        <div>
+          <h1 className="text-2xl text-center">Commentaire</h1>
+        </div>
+        <div className="text-center">
+          <p>-- {modalText} --</p>
+        </div>
+        <div className="flex justify-center">
+          <button onClick={closeModal} className="btn btn-primary">
+            Fermer
+          </button>
+        </div>
+      </div>
+    );
+  };
 
   const filteredLeaves = useMemo(() => {
     let result = [...leaveRequests];
@@ -109,7 +143,7 @@ const AllLeaveRequestList = ({
                 <th>Type</th>
                 <th>Date de début</th>
                 <th>Date de fin</th>
-                <th>Commentaire</th>
+                {userRole !== "EMPLOYE" ? null : <th>Commentaire</th>}
                 <th>Status</th>
                 <th></th>
               </tr>
@@ -131,7 +165,9 @@ const AllLeaveRequestList = ({
                       <td> {request.type} </td>
                       <td> {request.dateDebut} </td>
                       <td> {request.dateFin} </td>
-                      <td> {request.commentaire} </td>
+                      {userRole !== "EMPLOYE" ? null : (
+                        <td> {request.commentaire} </td>
+                      )}
                       <td>
                         {" "}
                         <span
@@ -149,6 +185,12 @@ const AllLeaveRequestList = ({
                       {userRole === "ADMIN" ? null : userRole ===
                         "GESTIONNAIRE" ? (
                         <td className="flex justify-end gap-2">
+                          <button
+                            className="btn btn-primary flex justify-center items-center text-white"
+                            onClick={() => openModal(request)}
+                          >
+                            voir le commentaire
+                          </button>
                           <button
                             className="btn btn-primary text-white"
                             disabled={
@@ -189,6 +231,9 @@ const AllLeaveRequestList = ({
             </tbody>
           </table>
         )}
+        <Modal isOpen={isOpenModal} onClose={closeModal}>
+          {rendreContent()}
+        </Modal>
       </div>
     </div>
   );

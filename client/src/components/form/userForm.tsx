@@ -19,19 +19,11 @@ const UserForm = ({ initialData, onSubmit }: UserFormProps) => {
       prenom: formData.get("prenom") as string,
       email: formData.get("email") as string,
       adresse: formData.get("adresse") as string,
-      soldeConges: 20,
+      soldeConges: formData.get("soldeConges") as unknown as number,
       role: formData.get("role") as string,
     };
 
-    if (formData.get("motDePasse") !== undefined) {
-      const dataWithPassword = {
-        ...data,
-        motDePasse: formData.get("motDePasse") as string,
-      };
-      onSubmit(dataWithPassword);
-    } else {
-      onSubmit(data);
-    }
+    onSubmit(data);
   };
 
   return (
@@ -82,18 +74,17 @@ const UserForm = ({ initialData, onSubmit }: UserFormProps) => {
               className="w-full border rounded-xl p-2"
             />
           </div>
-          {isEdit ? (
-            <div className="form-control">
-              <label htmlFor="soldeConges">Solde de congé</label>
-              <input
-                type="number"
-                name="soldeConges"
-                id="soldeConges"
-                defaultValue={initialData?.soldeConges}
-                className="w-full border rounded-xl p-2"
-              />
-            </div>
-          ) : null}
+          <div className="form-control">
+            <label htmlFor="soldeConges">Solde de congé</label>
+            <input
+              type="number"
+              name="soldeConges"
+              id="soldeConges"
+              defaultValue={isEdit ? initialData?.soldeConges : 20}
+              className="w-full border rounded-xl p-2"
+            />
+          </div>
+
           <div className="form-control">
             <label htmlFor="role">Role</label>
             <select

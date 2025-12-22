@@ -60,7 +60,7 @@ const DashboardHeader = () => {
         <div className="space-y-4 text-center">
           <h2 className="text-xl font-bold">Confirmer la déconnexion</h2>
 
-          <p className="text-neutral-500">
+          <p className="text-white">
             Êtes-vous sûr de vouloir vous déconnecter ?
           </p>
 

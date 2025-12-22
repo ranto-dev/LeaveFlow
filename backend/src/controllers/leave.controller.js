@@ -33,7 +33,10 @@ module.exports.requestLeave = async (req, res) => {
       commentaire,
       employe: userId,
     });
-    res.status(201).json(leave);
+    res.status(201).json({
+      message:
+        "Demande envoyé! Veuillez patienter jusqu'à ce que votre demande soit traiter! ",
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Erreur interne du serveur" });
@@ -102,7 +105,7 @@ module.exports.editLeaveRequest = async (req, res) => {
     const requestUpdated = await Leave.findByIdAndUpdate(id, updates, {
       new: false,
     });
-    res.json(requestUpdated);
+    res.json({ message: "Demande modifier!", content: requestUpdated });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Erreur interne du serveur" });
