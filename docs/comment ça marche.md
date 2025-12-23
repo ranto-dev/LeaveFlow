@@ -87,17 +87,17 @@ NODE_ENV=development
 CLIENT_URI=http://localhost:5173
 ```
 
-Ensite on peut le lancer
+On peut ensuite tester et lancer l'application
 
-- le frontend dans un navigateur via l'url [http://localhost:5173](http://localhost:5173)
-- tester l'api backend via l'url [http://localhost:3000](http://localhost:3000)
-- lancer `mongodb cli` via la commande suivante
+- lancer l'interface utilisateur dans un navigateur via l'url [http://localhost:5173](http://localhost:5173)
+- tester l'api avec **insomnia**, **postman** ou **Rest client** de VSCode via l'url [http://localhost:3000](http://localhost:3000)
+- Tester la connexion à `MongoDB`
 
   ```bash
   # exécuter bash dans le container docker de mongodb
   sudo docker exec -it leaveflow-mongo bash
 
-  # accéder à mongodb cli engine (nommage particulier dans ma maison)
+  # lancer mongodb
   mongosh
 
   # Executer une commande de test
@@ -106,16 +106,16 @@ Ensite on peut le lancer
 
 ### 4. Premier contact avec l'application
 
-Par default, notre base de donne est vide. Sauf, il existe déjà un ADMIN par default
+Par default, notre base de donne est vide. Mais, dès qu'on lance pour la première fois l'application l'api (le backend), le script **seedAdmin** s'executera et insert un administrateur par default dont les identifiant sont les suivantes:
 
 ```raw
 email: rantoandrianandraina@gmail.com
 mot de passe : ranto123
 ```
 
-Pour que vous puissiez bénéficier des fonctionnalités de l'application, il faudra que vous ajoutiez plusieurs utilisateurs dont leur role est varié.
+alors, dès que l'interface de connexion se charche, on peut déjà ce se connecter en tant que ADMINISTRATEUR. Ensuite, pour que nous puissions bénéficier des fonctionnalités clés de l'application, il faudra qu'in ajoute plusieurs utilisateurs dont leur role est varié entre **EMPLOYE** et **GESTIONNAIRTE**.
 
-Pour que vous ne soit pas embéter à trouver des données fictife,
+Pour qu'on puisse tester l'application de manière rapide et logique, on peut se référer à des exemples des données fictife,
 
-- Base de test pour les utilisateurs: fichier [`/docs/user.json`](./user.json).
-- Base de test pour les demandes de congé: fichier [`/docs/leaveRequest.json`](./leaveRequest.json)
+- Base de test pour les utilisateurs: fichier [`docs/user.json`](./user.json).
+- Base de test pour les demandes de congé: fichier [`docs/leaveRequest.json`](./leaveRequest.json)
