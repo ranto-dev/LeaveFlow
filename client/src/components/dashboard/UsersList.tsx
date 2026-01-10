@@ -62,35 +62,13 @@ const UserList = ({ users }: UserListProps) => {
     setDeleting(user);
   };
 
-  const confirmDelete = async () => {
-    if (!deleting) return;
-    const toastId = notify.loading("Envoi de la demande...");
-
-    try {
-      setDeleteLoading(true);
-      await deleteUser(deleting?._id);
-      setDeleting(null);
-      setTimeout(() => {
-        notify.success("Utilisateur supprimé avec succès");
-      }, 1000);
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
-    } catch (err) {
-      console.error(err);
-      notify.error("Erreur lors de la suppression de l'utilisateur");
-    } finally {
-      setDeleteLoading(false);
-    }
-  };
-
   const closeModal = () => {
     setIsModalOpen(false);
     setEditing(null);
   };
 
   const handleCreate = async (data: Partial<UserType>) => {
-    const toastId = notify.loading("Envoi de la demande...");
+    const toastId = notify.loading("Enregistreent en cours ...");
 
     try {
       await createUser(data);
@@ -113,7 +91,7 @@ const UserList = ({ users }: UserListProps) => {
       await editUser(editing?._id as string, data);
       setEditing(null);
       setTimeout(() => {
-        notify.success("Utilisateur modifier avec succès");
+        notify.success("Utilisateur modifié avec succès");
       }, 1000);
       setTimeout(() => {
         window.location.reload();
@@ -121,6 +99,28 @@ const UserList = ({ users }: UserListProps) => {
     } catch (err) {
       console.error(err);
       notify.error("Erreur lors de la modification de l'utilisateur");
+    }
+  };
+
+  const confirmDelete = async () => {
+    if (!deleting) return;
+    const toastId = notify.loading("suppression en cours ...");
+
+    try {
+      setDeleteLoading(true);
+      await deleteUser(deleting?._id);
+      setDeleting(null);
+      setTimeout(() => {
+        notify.success("Utilisateur supprimé avec succès");
+      }, 1000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (err) {
+      console.error(err);
+      notify.error("Erreur lors de la suppression de l'utilisateur");
+    } finally {
+      setDeleteLoading(false);
     }
   };
 

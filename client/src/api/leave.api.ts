@@ -18,8 +18,7 @@ export async function postLeaveRequest(request: Partial<LeaveRequestType>) {
   )
     .then((response) => response.json())
     .then((response) => {
-      alert(response.message);
-      window.location.reload();
+      console.log(response);
     })
     .catch((err) => console.error(err));
 }
@@ -80,8 +79,7 @@ export const editLeaveRequest = async (
   )
     .then((response) => response.json())
     .then((response) => {
-      alert(response.message);
-      window.location.reload();
+      console.log(response);
     })
     .catch((err) => console.error(err));
 };

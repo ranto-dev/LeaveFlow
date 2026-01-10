@@ -8,6 +8,7 @@ import { getAllLeaveRequest, treateLeaveRequest } from "../../api/leave.api";
 import { useAuth } from "../../context/AuthContext";
 import AllLeaveRequestList from "../../components/dashboard/AllRequestList";
 import LeaveStatusDoughnutChart from "../../components/charts/LeaveStatusDoughnutChart";
+import { notify } from "../../utils/notify";
 
 const ManagerDashboard = () => {
   const [leaveRequest, setLeaveRequest] = useState<LeaveRequestType[]>([]);
@@ -19,13 +20,24 @@ const ManagerDashboard = () => {
     setTreating(request);
   };
 
-  const handleTreate = (data: Partial<LeaveRequestType>) => {
-    console.log(data._id, data.statut);
+  const handleTreate = async (data: Partial<LeaveRequestType>) => {
     const statut = {
       statut: data.statut,
     };
-    treateLeaveRequest(data._id, statut);
-    window.location.reload();
+    const toastId = notify.loading("Enregistreent en cours ...");
+
+    try {
+      await treateLeaveRequest(data._id, statut);
+      setTimeout(() => {
+        notify.success("Demande de congé traitée avec succès");
+      }, 1000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (err) {
+      console.error(err);
+      notify.error("Erreur lors du traitement de la demande");
+    }
   };
 
   useEffect(() => {
