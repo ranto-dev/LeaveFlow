@@ -1,7 +1,7 @@
 /**
  * Composant: Formulaire de création et de motification d'une demande de congé
  */
-import type { LeaveRequestType } from "../../typescript/requestLeave";
+import type { LeaveRequestType } from "../../@types/requestLeave";
 
 interface LeaveRequestFormProps {
   initialData?: LeaveRequestType | null;

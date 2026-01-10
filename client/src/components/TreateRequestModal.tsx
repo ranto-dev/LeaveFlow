@@ -1,7 +1,7 @@
 /**
  * Composant: Modal box pour traitement d'une demande de congé
  */
-import type { LeaveRequestType } from "../typescript/requestLeave";
+import type { LeaveRequestType } from "../@types/requestLeave";
 import Modal from "./Modal";
 
 type TreateRequestModalProps = {

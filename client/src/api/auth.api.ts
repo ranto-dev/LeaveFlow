@@ -2,7 +2,7 @@
  * API CALL: authentification
  */
 
-import type { UserType } from "../typescript/user";
+import type { UserType } from "../@types/user";
 
 // LOGIN
 export async function login(email: string, motDePasse: string) {
@@ -15,7 +15,7 @@ export async function login(email: string, motDePasse: string) {
       },
       credentials: "include",
       body: JSON.stringify({ email, motDePasse }),
-    }
+    },
   );
 
   if (!res.ok) {
@@ -32,7 +32,7 @@ export async function logout() {
     {
       method: "POST",
       credentials: "include",
-    }
+    },
   );
 
   if (!res.ok) {
@@ -47,7 +47,7 @@ export async function getMe(): Promise<UserType> {
     {
       method: "GET",
       credentials: "include",
-    }
+    },
   );
 
   if (!res.ok) {

@@ -3,7 +3,7 @@
  */
 import { createContext, useContext, useEffect, useState } from "react";
 import * as authApi from "../api/auth.api";
-import type { UserType } from "../typescript/user";
+import type { UserType } from "../@types/user";
 
 interface AuthContextType {
   user: UserType | null;

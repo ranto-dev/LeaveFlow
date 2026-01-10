@@ -2,7 +2,7 @@
  * Espace pour les GESTIONNAIRES
  */
 import { useEffect, useState } from "react";
-import type { LeaveRequestType } from "../../typescript/requestLeave";
+import type { LeaveRequestType } from "../../@types/requestLeave";
 import TreateRequestModal from "../../components/TreateRequestModal";
 import { getAllLeaveRequest, treateLeaveRequest } from "../../api/leave.api";
 import { useAuth } from "../../context/AuthContext";
@@ -63,7 +63,7 @@ const ManagerDashboard = () => {
         <AllLeaveRequestList
           userRole={user?.role as string}
           leaveRequests={leaveRequest}
-          onTreate={openTreateModal}
+          onTreat={openTreateModal}
         />
       </div>
       <TreateRequestModal

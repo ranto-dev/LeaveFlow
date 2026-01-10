@@ -10,7 +10,7 @@ import {
   type ChartOptions,
   type Plugin,
 } from "chart.js";
-import type { UserType } from "../../typescript/user";
+import type { UserType } from "../../@types/user";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -24,7 +24,7 @@ const centerTextPlugin: Plugin<"doughnut"> = {
     const { ctx, width, height } = chart;
     const total = chart.data.datasets[0].data.reduce(
       (a: number, b: number) => a + b,
-      0
+      0,
     );
 
     ctx.save();
@@ -47,7 +47,7 @@ const UserRoleDoughnutChart = ({ users }: UserRoleDoughnutChartProps) => {
       ADMIN: 0,
       GESTIONNAIRE: 0,
       EMPLOYE: 0,
-    }
+    },
   );
 
   const data = {

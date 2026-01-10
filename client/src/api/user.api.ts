@@ -1,7 +1,7 @@
 /**
  * API CALL: utilisateur
  */
-import type { UserType } from "../typescript/user";
+import type { UserType } from "../@types/user";
 
 // pour récupérer toute la liste des utilisateurs
 export const getAllUser = async () => {
@@ -10,7 +10,7 @@ export const getAllUser = async () => {
     {
       method: "GET",
       credentials: "include",
-    }
+    },
   );
 
   if (!response.ok) {
@@ -46,7 +46,7 @@ export const editUser = async (id: string, data: Partial<UserType>) => {
         "content-type": "application/json",
       },
       body: JSON.stringify(data),
-    }
+    },
   )
     .then((response) => response.json())
     .then((response) => console.log(response))
@@ -60,7 +60,7 @@ export const deleteUser = async (id: string) => {
     {
       method: "DELETE",
       credentials: "include",
-    }
+    },
   )
     .then((response) => response.json())
     .then((response) => console.log(response))

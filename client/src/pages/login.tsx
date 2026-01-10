@@ -55,7 +55,7 @@ const LoginPage = () => {
               <input
                 type="email"
                 className="input input-bordered w-full"
-                placeholder="ex: nom@entreprise.com"
+                placeholder="ex: contact.votreadresse@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required

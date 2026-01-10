@@ -3,8 +3,8 @@
  */
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import type { Role } from "../typescript/role";
 import type { JSX } from "react";
+import type { Role } from "../@types/role";
 
 interface Props {
   role: Role | Role[];

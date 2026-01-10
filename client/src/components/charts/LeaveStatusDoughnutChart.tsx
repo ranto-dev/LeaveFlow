@@ -10,7 +10,7 @@ import {
   type Plugin,
   type ChartOptions,
 } from "chart.js";
-import type { LeaveRequestType } from "../../typescript/requestLeave";
+import type { LeaveRequestType } from "../../@types/requestLeave";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -20,7 +20,7 @@ const centerTextPlugin: Plugin<"doughnut"> = {
     const { ctx, width, height } = chart;
     const total = chart.data.datasets[0].data.reduce(
       (a: number, b: number) => a + b,
-      0
+      0,
     );
 
     ctx.save();
@@ -47,7 +47,7 @@ const LeaveStatusDoughnutChart = ({ leaves }: Props) => {
       EN_ATTENTE: 0,
       ACCEPTEE: 0,
       REFUSEE: 0,
-    }
+    },
   );
 
   const data = {

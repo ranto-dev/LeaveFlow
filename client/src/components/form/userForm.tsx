@@ -1,7 +1,7 @@
 /**
  * Composant: formulaire d'ajout et de mofication d'un utilisateur
  */
-import type { UserType } from "../../typescript/user";
+import type { UserType } from "../../@types/user";
 
 interface UserFormProps {
   initialData?: UserType | null;
@@ -98,6 +98,7 @@ const UserForm = ({ initialData, onSubmit }: UserFormProps) => {
             <select
               name="role"
               id="role"
+              defaultValue={isEdit ? initialData?.role : "EMPLOYE"}
               className="select select-bordered w-full border border-white rounded-xl p-2"
             >
               <option value="ADMIN">ADMIN</option>

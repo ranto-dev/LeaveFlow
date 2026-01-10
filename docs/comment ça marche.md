@@ -21,7 +21,7 @@ sudo systemctl enable docker
 # demarrer le service docker
 sudo systemctl start docker
 
-# verifier le statut du service docer
+# verifier le statut du service docKer
 sudo systemctl status docker
 ```
 
@@ -29,10 +29,10 @@ Une fois docker installé, on peut se rendre dans une terminale ou CMD et taper 
 
 ```bash
 # afficher la version de docker
-docker --version*
+docker --version
 
 # afficher la version de docker-compose
-docker-compose --version
+docker compose --version
 ```
 
 ## 2. Cloner le repositorie github

@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import LeaveRequestForm from "../../components/form/leaveRequestForm";
 import Modal from "../../components/Modal";
-import type { LeaveRequestType } from "../../typescript/requestLeave";
+import type { LeaveRequestType } from "../../@types/requestLeave";
 import {
   editLeaveRequest,
   getMyLeaveRequests,

@@ -3,12 +3,13 @@
  */
 import { FaTrash } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
-import type { UserType } from "../../typescript/user";
+import type { UserType } from "../../@types/user";
 import { useMemo, useState } from "react";
 import { createUser, deleteUser, editUser } from "../../api/user.api";
 import Modal from "../Modal";
 import UserForm from "../form/userForm";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
+import { notify } from "../../utils/notify";
 
 type UserListProps = {
   users: UserType[];
@@ -30,7 +31,7 @@ const UserList = ({ users }: UserListProps) => {
     if (search) {
       const s = search.toLowerCase();
       result = result.filter((l) =>
-        `${l.nom} ${l.prenom}`.toLowerCase().includes(s)
+        `${l.nom} ${l.prenom}`.toLowerCase().includes(s),
       );
     }
 
@@ -63,14 +64,21 @@ const UserList = ({ users }: UserListProps) => {
 
   const confirmDelete = async () => {
     if (!deleting) return;
+    const toastId = notify.loading("Envoi de la demande...");
 
     try {
       setDeleteLoading(true);
       await deleteUser(deleting?._id);
       setDeleting(null);
-      window.location.reload();
+      setTimeout(() => {
+        notify.success("Utilisateur supprimé avec succès");
+      }, 1000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (err) {
       console.error(err);
+      notify.error("Erreur lors de la suppression de l'utilisateur");
     } finally {
       setDeleteLoading(false);
     }
@@ -81,16 +89,39 @@ const UserList = ({ users }: UserListProps) => {
     setEditing(null);
   };
 
-  const handleCreate = (data: Partial<UserType>) => {
-    console.log(data);
-    createUser(data);
-   // window.location.reload();
+  const handleCreate = async (data: Partial<UserType>) => {
+    const toastId = notify.loading("Envoi de la demande...");
+
+    try {
+      await createUser(data);
+      setTimeout(() => {
+        notify.success("Utilisateur enregistré avec succès");
+      }, 1000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (err) {
+      console.error(err);
+      notify.error("Erreur lors de l'enregistrement de l'utilisateur");
+    }
   };
 
-  const handleUpdate = (data: Partial<UserType>) => {
-    editUser(editing?._id as string, data);
-    setEditing(null);
-    window.location.reload();
+  const handleUpdate = async (data: Partial<UserType>) => {
+    const toastId = notify.loading("Modification en cours...");
+
+    try {
+      await editUser(editing?._id as string, data);
+      setEditing(null);
+      setTimeout(() => {
+        notify.success("Utilisateur modifier avec succès");
+      }, 1000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (err) {
+      console.error(err);
+      notify.error("Erreur lors de la modification de l'utilisateur");
+    }
   };
 
   return (

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { getAllUser } from "../../api/user.api";
 import UserList from "../../components/dashboard/UsersList";
-import type { UserType } from "../../typescript/user";
-import type { LeaveRequestType } from "../../typescript/requestLeave";
+import type { UserType } from "../../@types/user";
+import type { LeaveRequestType } from "../../@types/requestLeave";
 import { getAllLeaveRequest } from "../../api/leave.api";
 import { useAuth } from "../../context/AuthContext";
 import AllLeaveRequestList from "../../components/dashboard/AllRequestList";
@@ -69,7 +69,7 @@ const AdminDashboard = () => {
 
         <AllLeaveRequestList
           leaveRequests={leaveRequest}
-          userRole={user?.role}
+          userRole={user?.role as string}
         />
 
         <UserList users={users} />

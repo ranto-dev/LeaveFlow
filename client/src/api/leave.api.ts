@@ -1,7 +1,7 @@
 /**
  * API CALL: demande de congé
  */
-import type { LeaveRequestType } from "../typescript/requestLeave";
+import type { LeaveRequestType } from "../@types/requestLeave";
 
 // pour la création d'une nouvelle demande de congé
 export async function postLeaveRequest(request: Partial<LeaveRequestType>) {
@@ -14,7 +14,7 @@ export async function postLeaveRequest(request: Partial<LeaveRequestType>) {
       },
       credentials: "include",
       body: JSON.stringify(request),
-    }
+    },
   )
     .then((response) => response.json())
     .then((response) => {
@@ -35,7 +35,7 @@ export const getAllLeaveRequest = async (userRole: string) => {
     {
       method: "GET",
       credentials: "include",
-    }
+    },
   );
 
   if (!response.ok) {
@@ -52,7 +52,7 @@ export async function getMyLeaveRequests(): Promise<LeaveRequestType[]> {
     {
       method: "GET",
       credentials: "include",
-    }
+    },
   );
 
   if (!response.ok) {
@@ -65,7 +65,7 @@ export async function getMyLeaveRequests(): Promise<LeaveRequestType[]> {
 // pour mettre à jour et modifier une demande de congé
 export const editLeaveRequest = async (
   id: string,
-  data: Partial<LeaveRequestType>
+  data: Partial<LeaveRequestType>,
 ) => {
   await fetch(
     `http://${window.location.hostname}:3000/api/worker/leave/${id}`,
@@ -76,7 +76,7 @@ export const editLeaveRequest = async (
       },
       credentials: "include",
       body: JSON.stringify(data),
-    }
+    },
   )
     .then((response) => response.json())
     .then((response) => {
@@ -91,7 +91,7 @@ export const treateLeaveRequest = async (
   _id: string | undefined,
   statut: {
     statut: string | undefined;
-  }
+  },
 ) => {
   await fetch(
     `http://${window.location.hostname}:3000/api/manager/leave/treate/${_id}`,
@@ -102,7 +102,7 @@ export const treateLeaveRequest = async (
       },
       credentials: "include",
       body: JSON.stringify(statut),
-    }
+    },
   )
     .then((response) => response.json())
     .then((response) => console.log(response))
@@ -116,7 +116,7 @@ export const deleteLeaveRequest = async (id: string | undefined) => {
     {
       method: "DELETE",
       credentials: "include",
-    }
+    },
   );
 
   if (!response.ok) {

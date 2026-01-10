@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { FaHourglass, FaTrash } from "react-icons/fa6";
 import Modal from "../Modal";
-import type { LeaveRequestType } from "../../typescript/requestLeave";
+import type { LeaveRequestType } from "../../@types/requestLeave";
 type SortKey = "dateDebut" | "dateFin";
 
 type AllLeaveRequestListProps = {
@@ -50,7 +50,7 @@ const AllLeaveRequestList = ({
       result = result.filter((l) =>
         `${l.employe?.nom ?? ""} ${l.employe?.prenom ?? ""}`
           .toLowerCase()
-          .includes(s)
+          .includes(s),
       );
     }
 
@@ -166,8 +166,8 @@ const AllLeaveRequestList = ({
                         request.statut === "EN_ATTENTE"
                           ? "badge-warning"
                           : request.statut === "ACCEPTEE"
-                          ? "badge-success"
-                          : "badge-error"
+                            ? "badge-success"
+                            : "badge-error"
                       }`}
                     >
                       {request.statut}
