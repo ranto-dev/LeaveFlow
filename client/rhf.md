@@ -124,6 +124,7 @@ register("age", {
 
 ---
 
+
 ## 🧠 Accéder à l’état du formulaire
 
 ```ts

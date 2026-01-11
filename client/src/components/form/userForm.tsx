@@ -1,7 +1,18 @@
 /**
- * Composant: formulaire d'ajout et de mofication d'un utilisateur
+ * Composant: formulaire d'ajout et de modification d'un utilisateur
  */
+import { useForm } from "react-hook-form";
 import type { UserType } from "../../@types/user";
+
+type UserFormData = {
+  nom: string;
+  prenom: string;
+  email: string;
+  adresse: string;
+  soldeConges: number;
+  role: "ADMIN" | "GESTIONNAIRE" | "EMPLOYE";
+  motDePasse: string;
+};
 
 interface UserFormProps {
   initialData?: UserType | null;
@@ -11,117 +22,156 @@ interface UserFormProps {
 const UserForm = ({ initialData, onSubmit }: UserFormProps) => {
   const isEdit = Boolean(initialData);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = {
-      nom: formData.get("nom") as string,
-      prenom: formData.get("prenom") as string,
-      email: formData.get("email") as string,
-      adresse: formData.get("adresse") as string,
-      soldeConges: formData.get("soldeConges") as unknown as number,
-      role: formData.get("role") as string,
-    };
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<UserFormData>({
+    defaultValues: {
+      nom: initialData?.nom ?? "",
+      prenom: initialData?.prenom ?? "",
+      email: initialData?.email ?? "",
+      adresse: initialData?.adresse ?? "",
+      soldeConges: initialData?.soldeConges ?? 20,
+      role: (initialData?.role as UserFormData["role"]) ?? "EMPLOYE",
+    },
+  });
 
-    if (isEdit === false) {
-      const dataCreate = {
-        ...data,
-        motDePasse: formData.get("motDePasse") as string,
-      };
-      onSubmit(dataCreate);
+  const onFormSubmit = (data: UserFormData) => {
+    if (isEdit) {
+      // ⚠️ ne jamais envoyer le mot de passe en modification
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { motDePasse, ...updateData } = data;
+      onSubmit(updateData);
     } else {
       onSubmit(data);
+      reset({
+        nom: "",
+        prenom: "",
+        email: "",
+        adresse: "",
+        soldeConges: 20,
+        role: "EMPLOYE",
+        motDePasse: "",
+      });
     }
   };
 
   return (
-    <div className="card bg-base-100">
+    <div className="card bg-base-100 shadow">
       <div className="card-body space-y-4">
         <h2 className="text-xl font-bold">
-          {isEdit ? "Modifier l'utilisateur" : "Nouvelle utilisateur"}
+          {isEdit ? "Modifier l'utilisateur" : "Nouvel utilisateur"}
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-4">
+          {/* NOM */}
           <div className="form-control">
-            <label htmlFor="nom">Nom</label>
+            <label className="label font-medium">Nom</label>
             <input
-              type="text"
-              name="nom"
-              id="nom"
-              defaultValue={initialData?.nom}
-              className="w-full border rounded-xl p-2"
+              className="input input-bordered"
+              {...register("nom", { required: "Le nom est requis" })}
             />
+            {errors.nom && (
+              <span className="text-error text-sm">{errors.nom.message}</span>
+            )}
           </div>
+
+          {/* PRENOM */}
           <div className="form-control">
-            <label htmlFor="prenom">Prénom</label>
+            <label className="label font-medium">Prénom</label>
             <input
-              type="text"
-              name="prenom"
-              id="prenom"
-              defaultValue={initialData?.prenom}
-              className="w-full border rounded-xl p-2"
+              className="input input-bordered"
+              {...register("prenom", { required: "Le prénom est requis" })}
             />
+            {errors.prenom && (
+              <span className="text-error text-sm">
+                {errors.prenom.message}
+              </span>
+            )}
           </div>
+
+          {/* EMAIL */}
           <div className="form-control">
-            <label htmlFor="email">Email</label>
+            <label className="label font-medium">Email</label>
             <input
               type="email"
-              name="email"
-              id="email"
-              defaultValue={initialData?.email}
-              className="w-full border rounded-xl p-2"
+              className="input input-bordered"
+              {...register("email", {
+                required: "L'email est requis",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Email invalide",
+                },
+              })}
             />
+            {errors.email && (
+              <span className="text-error text-sm">{errors.email.message}</span>
+            )}
           </div>
+
+          {/* ADRESSE */}
           <div className="form-control">
-            <label htmlFor="adresse">Adresse</label>
+            <label className="label font-medium">Adresse</label>
             <input
-              type="text"
-              name="adresse"
-              id="adresse"
-              defaultValue={initialData?.adresse}
-              className="w-full border rounded-xl p-2"
-            />
-          </div>
-          <div className="form-control">
-            <label htmlFor="soldeConges">Solde de congé</label>
-            <input
-              type="number"
-              name="soldeConges"
-              id="soldeConges"
-              defaultValue={isEdit ? initialData?.soldeConges : 20}
-              className="w-full border rounded-xl p-2"
+              className="input input-bordered"
+              {...register("adresse", { required: true })}
             />
           </div>
 
+          {/* SOLDE */}
           <div className="form-control">
-            <label htmlFor="role">Role</label>
-            <select
-              name="role"
-              id="role"
-              defaultValue={isEdit ? initialData?.role : "EMPLOYE"}
-              className="select select-bordered w-full border border-white rounded-xl p-2"
-            >
+            <label className="label font-medium">Solde de congés</label>
+            <input
+              type="number"
+              className="input input-bordered"
+              {...register("soldeConges", {
+                valueAsNumber: true,
+                min: { value: 0, message: "Solde invalide" },
+              })}
+            />
+          </div>
+
+          {/* ROLE */}
+          <div className="form-control">
+            <label className="label font-medium">Rôle</label>
+            <select className="select select-bordered" {...register("role")}>
               <option value="ADMIN">ADMIN</option>
               <option value="GESTIONNAIRE">GESTIONNAIRE</option>
               <option value="EMPLOYE">EMPLOYE</option>
             </select>
           </div>
-          {isEdit ? null : (
+
+          {/* MOT DE PASSE */}
+          {!isEdit && (
             <div className="form-control">
-              <label htmlFor="motDePasse">Mot de passe</label>
+              <label className="label font-medium">Mot de passe</label>
               <input
                 type="password"
-                name="motDePasse"
-                id="motDePasse"
-                defaultValue={initialData?.motDePasse}
-                className="w-full border rounded-xl p-2"
-                placeholder="**********"
+                className="input input-bordered"
+                {...register("motDePasse", {
+                  required: "Mot de passe requis",
+                  minLength: {
+                    value: 4,
+                    message: "Minimum 4 caractères",
+                  },
+                })}
               />
+              {errors.motDePasse && (
+                <span className="text-error text-sm">
+                  {errors.motDePasse.message}
+                </span>
+              )}
             </div>
           )}
 
-          <button className="btn btn-primary w-full">
-            {isEdit ? "Mettre à jour" : "Envoyer"}
+          <button
+            type="submit"
+            className="btn btn-primary w-full"
+            disabled={isSubmitting}
+          >
+            {isEdit ? "Mettre à jour" : "Créer"}
           </button>
         </form>
       </div>

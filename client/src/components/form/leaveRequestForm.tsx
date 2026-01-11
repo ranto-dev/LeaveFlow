@@ -1,80 +1,122 @@
 /**
- * Composant: Formulaire de création et de motification d'une demande de congé
+ * Composant: Formulaire de création et de modification d'une demande de congé
  */
+import { useForm } from "react-hook-form";
 import type { LeaveRequestType } from "../../@types/requestLeave";
+
+type LeaveRequestFormData = Pick<
+  LeaveRequestType,
+  "type" | "dateDebut" | "dateFin" | "commentaire"
+>;
 
 interface LeaveRequestFormProps {
   initialData?: LeaveRequestType | null;
-  onSubmit: (data: Partial<LeaveRequestType>) => void;
+  onSubmit: (data: LeaveRequestFormData) => void;
 }
 
 const LeaveRequestForm = ({ initialData, onSubmit }: LeaveRequestFormProps) => {
   const isEdit = Boolean(initialData);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<LeaveRequestFormData>({
+    defaultValues: {
+      type: initialData?.type ?? "",
+      dateDebut: initialData?.dateDebut ?? "",
+      dateFin: initialData?.dateFin ?? "",
+      commentaire: initialData?.commentaire ?? "",
+    },
+  });
 
-    onSubmit({
-      type: formData.get("type") as string,
-      dateDebut: formData.get("dateDebut") as string,
-      dateFin: formData.get("dateFin") as string,
-      commentaire: formData.get("commentaire") as string,
-    });
+  const onFormSubmit = (data: LeaveRequestFormData) => {
+    onSubmit(data);
 
-    e.currentTarget.reset();
+    if (!isEdit) {
+      reset();
+    }
   };
 
   return (
-    <div className="card bg-base-100">
+    <div className="card bg-base-100 shadow">
       <div className="card-body space-y-4">
         <h2 className="text-xl font-bold">
           {isEdit
-            ? "Modifier la LeaveRequestType"
-            : "Nouvelle LeaveRequestType"}
+            ? "Modifier la demande de congé"
+            : "Nouvelle demande de congé"}
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-4">
+          {/* TYPE */}
           <div className="form-control">
-            <label className="label">Type de congé</label>
+            <label className="label font-medium">Type de congé</label>
             <select
-              name="type"
-              defaultValue={initialData?.type ?? ""}
               className="select select-bordered"
-              required
+              {...register("type", { required: "Le type est requis" })}
             >
               <option value="">-- Choisir --</option>
               <option value="maladie">Maladie</option>
               <option value="vacances">Vacances</option>
               <option value="absence">Absence</option>
             </select>
+            {errors.type && (
+              <span className="text-error text-sm">{errors.type.message}</span>
+            )}
           </div>
 
+          {/* DATES */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="date"
-              name="dateDebut"
-              defaultValue={initialData?.dateDebut}
-              className="input input-bordered"
-              required
-            />
-            <input
-              type="date"
-              name="dateFin"
-              defaultValue={initialData?.dateFin}
-              className="input input-bordered"
-              required
+            <div className="form-control">
+              <label className="label font-medium">Date de début</label>
+              <input
+                type="date"
+                className="input input-bordered"
+                {...register("dateDebut", {
+                  required: "La date de début est requise",
+                })}
+              />
+              {errors.dateDebut && (
+                <span className="text-error text-sm">
+                  {errors.dateDebut.message}
+                </span>
+              )}
+            </div>
+
+            <div className="form-control">
+              <label className="label font-medium">Date de fin</label>
+              <input
+                type="date"
+                className="input input-bordered"
+                {...register("dateFin", {
+                  required: "La date de fin est requise",
+                })}
+              />
+              {errors.dateFin && (
+                <span className="text-error text-sm">
+                  {errors.dateFin.message}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* COMMENTAIRE */}
+          <div className="form-control">
+            <label className="label font-medium">Commentaire (optionnel)</label>
+            <textarea
+              className="textarea textarea-bordered"
+              placeholder="Ajouter un commentaire"
+              {...register("commentaire")}
             />
           </div>
 
-          <textarea
-            name="commentaire"
-            defaultValue={initialData?.commentaire}
-            className="textarea textarea-bordered"
-            placeholder="Commentaire (optionnel)"
-          />
-
-          <button className="btn btn-primary w-full">
+          {/* SUBMIT */}
+          <button
+            type="submit"
+            className="btn btn-primary w-full"
+            disabled={isSubmitting}
+          >
             {isEdit ? "Mettre à jour" : "Envoyer"}
           </button>
         </form>
