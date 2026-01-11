@@ -9,7 +9,7 @@ import { createUser, deleteUser, editUser } from "../../api/user.api";
 import Modal from "../Modal";
 import UserForm from "../form/userForm";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
-import { notify } from "../../utils/notify";
+import { toastPromise } from "../../utils/toastPromise";
 
 type UserListProps = {
   users: UserType[];
@@ -68,69 +68,67 @@ const UserList = ({ users }: UserListProps) => {
   };
 
   const handleCreate = async (data: Partial<UserType>) => {
-    const toastId = notify.loading("Enregistreent en cours ...");
-
     try {
-      await createUser(data);
-      setTimeout(() => {
-        notify.success("Utilisateur enregistré avec succès");
-      }, 1000);
+      await toastPromise(createUser(data), {
+        loading: "Enregistrement en cours ...",
+        success: "Utilisateur enregistré avec succès",
+        error: "Erreur lors de l'enregistrement",
+      });
+
       setTimeout(() => {
         window.location.reload();
-      }, 2000);
+      }, 1000);
     } catch (err) {
       console.error(err);
-      notify.error("Erreur lors de l'enregistrement de l'utilisateur");
     }
   };
 
   const handleUpdate = async (data: Partial<UserType>) => {
-    const toastId = notify.loading("Modification en cours...");
-
     try {
-      await editUser(editing?._id as string, data);
+      await toastPromise(editUser(editing?._id as string, data), {
+        loading: "Modification en cours ...",
+        success: "Utilisateur modifiée avec succès",
+        error: "Erreur lors de la modification",
+      });
+
       setEditing(null);
       setTimeout(() => {
-        notify.success("Utilisateur modifié avec succès");
-      }, 1000);
-      setTimeout(() => {
         window.location.reload();
-      }, 2000);
+      }, 1000);
     } catch (err) {
       console.error(err);
-      notify.error("Erreur lors de la modification de l'utilisateur");
     }
   };
 
   const confirmDelete = async () => {
     if (!deleting) return;
-    const toastId = notify.loading("suppression en cours ...");
 
     try {
       setDeleteLoading(true);
-      await deleteUser(deleting?._id);
+      await toastPromise(deleteUser(deleting?._id), {
+        loading: "Suppréssion en cours ...",
+        success: "Utilisateur supprimée avec succès",
+        error: "Erreur lors de la suppréssion",
+      });
+
       setDeleting(null);
       setTimeout(() => {
-        notify.success("Utilisateur supprimé avec succès");
-      }, 1000);
-      setTimeout(() => {
         window.location.reload();
-      }, 2000);
+      }, 1000);
     } catch (err) {
       console.error(err);
-      notify.error("Erreur lors de la suppression de l'utilisateur");
     } finally {
       setDeleteLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex justify-between items-center">
+    <div className="flex flex-col">
+      <div className="flex justify-between items-center mb-10">
         <div>
           <h1 className="text-2xl"># La liste des utilisateurs</h1>
         </div>
-        <div className="flex justify-end items-center gap-4">
+        <div className="flex justify-end items-center">
           <div>
             <button onClick={openCreateModal} className="btn btn-primary">
               Ajouter un nouveau utilisateur

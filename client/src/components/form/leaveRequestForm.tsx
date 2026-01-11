@@ -40,20 +40,19 @@ const LeaveRequestForm = ({ initialData, onSubmit }: LeaveRequestFormProps) => {
   };
 
   return (
-    <div className="card bg-base-100 shadow">
+    <div className="card bg-base-100">
       <div className="card-body space-y-4">
-        <h2 className="text-xl font-bold">
+        <h2 className="text-xl text-center font-bold">
           {isEdit
             ? "Modifier la demande de congé"
             : "Nouvelle demande de congé"}
         </h2>
 
         <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-4">
-          {/* TYPE */}
           <div className="form-control">
             <label className="label font-medium">Type de congé</label>
             <select
-              className="select select-bordered"
+              className="select select-bordered w-full"
               {...register("type", { required: "Le type est requis" })}
             >
               <option value="">-- Choisir --</option>
@@ -66,13 +65,12 @@ const LeaveRequestForm = ({ initialData, onSubmit }: LeaveRequestFormProps) => {
             )}
           </div>
 
-          {/* DATES */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="form-control">
               <label className="label font-medium">Date de début</label>
               <input
                 type="date"
-                className="input input-bordered"
+                className="input input-bordered w-full"
                 {...register("dateDebut", {
                   required: "La date de début est requise",
                 })}
@@ -88,7 +86,7 @@ const LeaveRequestForm = ({ initialData, onSubmit }: LeaveRequestFormProps) => {
               <label className="label font-medium">Date de fin</label>
               <input
                 type="date"
-                className="input input-bordered"
+                className="input input-bordered w-full"
                 {...register("dateFin", {
                   required: "La date de fin est requise",
                 })}
@@ -101,13 +99,15 @@ const LeaveRequestForm = ({ initialData, onSubmit }: LeaveRequestFormProps) => {
             </div>
           </div>
 
-          {/* COMMENTAIRE */}
           <div className="form-control">
             <label className="label font-medium">Commentaire (optionnel)</label>
             <textarea
-              className="textarea textarea-bordered"
+              className="textarea textarea-bordered w-full"
               placeholder="Ajouter un commentaire"
-              {...register("commentaire")}
+              {...register("commentaire", {
+                required:
+                  "Une commentaire est reauise pour votre demande de congé",
+              })}
             />
           </div>
 

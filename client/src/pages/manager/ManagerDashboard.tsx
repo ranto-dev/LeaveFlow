@@ -9,6 +9,7 @@ import { useAuth } from "../../context/AuthContext";
 import AllLeaveRequestList from "../../components/dashboard/AllRequestList";
 import LeaveStatusDoughnutChart from "../../components/charts/LeaveStatusDoughnutChart";
 import { notify } from "../../utils/notify";
+import { toastPromise } from "../../utils/toastPromise";
 
 const ManagerDashboard = () => {
   const [leaveRequest, setLeaveRequest] = useState<LeaveRequestType[]>([]);
@@ -24,16 +25,16 @@ const ManagerDashboard = () => {
     const statut = {
       statut: data.statut,
     };
-    const toastId = notify.loading("Enregistreent en cours ...");
 
     try {
-      await treateLeaveRequest(data._id, statut);
-      setTimeout(() => {
-        notify.success("Demande de congé traitée avec succès");
-      }, 1000);
+      await toastPromise(treateLeaveRequest(data._id, statut), {
+        loading: "Traitement en cours...",
+        success: "Demande de congé traitée",
+        error: "Erreur lors du traitement",
+      });
       setTimeout(() => {
         window.location.reload();
-      }, 2000);
+      }, 1000);
     } catch (err) {
       console.error(err);
       notify.error("Erreur lors du traitement de la demande");

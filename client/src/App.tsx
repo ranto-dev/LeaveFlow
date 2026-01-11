@@ -18,19 +18,23 @@ export default function App() {
     <AuthProvider>
       <Toaster
         position="top-center"
-        gutter={12}
         toastOptions={{
-          duration: 3500,
+          duration: 3000,
           style: {
-            background: "rgba(17, 24, 39, 0.95)",
-            color: "#F9FAFB",
-            padding: "14px 20px",
             borderRadius: "12px",
-            boxShadow:
-              "0 10px 25px rgba(0,0,0,0.25), 0 4px 10px rgba(0,0,0,0.15)",
-            fontSize: "0.95rem",
-            fontWeight: 500,
-            backdropFilter: "blur(8px)",
+            background: "#1f2937",
+            color: "#fff",
+            padding: "14px 18px",
+          },
+          success: {
+            style: {
+              background: "#16a34a",
+            },
+          },
+          error: {
+            style: {
+              background: "#dc2626",
+            },
           },
         }}
       />

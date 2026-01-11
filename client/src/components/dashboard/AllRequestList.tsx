@@ -68,14 +68,14 @@ const AllLeaveRequestList = ({
   }, [leaveRequests, search, typeFilter, sortKey, sortOrder]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col">
       {userRole === "ADMIN" && (
-        <h1 className="text-2xl font-bold">
-          Liste globale des demandes de congé
-        </h1>
+        <div className="mb-10">
+          <h1 className="text-2xl"># Liste globale des demandes de congé</h1>
+        </div>
       )}
 
-      <div className="flex flex-wrap gap-4 justify-between items-center">
+      <div className="flex flex-wrap gap-4 justify-between items-center mb-6">
         <input
           type="text"
           placeholder="Rechercher par nom ou prénom"
@@ -133,7 +133,7 @@ const AllLeaveRequestList = ({
                 <th>Date fin</th>
                 {userRole === "EMPLOYE" && <th>Commentaire</th>}
                 <th>Statut</th>
-                <th></th>
+                {userRole !== "ADMIN" && <th></th>}
               </tr>
             </thead>
 
@@ -156,9 +156,7 @@ const AllLeaveRequestList = ({
                   <td>{request.dateDebut}</td>
                   <td>{request.dateFin}</td>
 
-                  {userRole === "EMPLOYE" && (
-                    <td>{request.commentaire ?? "—"}</td>
-                  )}
+                  {userRole === "EMPLOYE" && <td>{request.commentaire}</td>}
 
                   <td>
                     <span
@@ -174,44 +172,46 @@ const AllLeaveRequestList = ({
                     </span>
                   </td>
 
-                  <td className="flex justify-end gap-2">
-                    {userRole === "GESTIONNAIRE" && (
-                      <>
-                        <button
-                          className="btn btn-sm btn-outline"
-                          onClick={() => openModal(request)}
-                        >
-                          Commentaire
-                        </button>
-                        <button
-                          className="btn btn-sm btn-primary"
-                          disabled={request.statut !== "EN_ATTENTE"}
-                          onClick={() => onTreat?.(request)}
-                        >
-                          <FaHourglass />
-                        </button>
-                      </>
-                    )}
+                  {userRole !== "ADMIN" ? (
+                    <td className="flex justify-end gap-2">
+                      {userRole === "GESTIONNAIRE" && (
+                        <>
+                          <button
+                            className="btn btn-sm btn-outline"
+                            onClick={() => openModal(request)}
+                          >
+                            Commentaire
+                          </button>
+                          <button
+                            className="btn btn-sm btn-primary"
+                            disabled={request.statut !== "EN_ATTENTE"}
+                            onClick={() => onTreat?.(request)}
+                          >
+                            <FaHourglass />
+                          </button>
+                        </>
+                      )}
 
-                    {userRole === "EMPLOYE" && (
-                      <>
-                        <button
-                          className="btn btn-sm btn-primary"
-                          disabled={request.statut !== "EN_ATTENTE"}
-                          onClick={() => onEdit?.(request)}
-                        >
-                          <MdEdit />
-                        </button>
-                        <button
-                          className="btn btn-sm btn-error"
-                          disabled={request.statut !== "EN_ATTENTE"}
-                          onClick={() => onDelete?.(request)}
-                        >
-                          <FaTrash />
-                        </button>
-                      </>
-                    )}
-                  </td>
+                      {userRole === "EMPLOYE" && (
+                        <>
+                          <button
+                            className="btn btn-sm btn-primary"
+                            disabled={request.statut !== "EN_ATTENTE"}
+                            onClick={() => onEdit?.(request)}
+                          >
+                            <MdEdit />
+                          </button>
+                          <button
+                            className="btn btn-sm btn-error"
+                            disabled={request.statut !== "EN_ATTENTE"}
+                            onClick={() => onDelete?.(request)}
+                          >
+                            <FaTrash />
+                          </button>
+                        </>
+                      )}
+                    </td>
+                  ) : null}
                 </tr>
               ))}
             </tbody>

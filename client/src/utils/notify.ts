@@ -11,15 +11,5 @@ export const notify = {
       icon: "❌",
     }),
 
-  info: (message: string) =>
-    toast(message, {
-      icon: "ℹ️",
-    }),
-
-  warning: (message: string) =>
-    toast(message, {
-      icon: "⚠️",
-    }),
-
   loading: (message: string) => toast.loading(message),
 };

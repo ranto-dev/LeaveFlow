@@ -40,8 +40,6 @@ const UserForm = ({ initialData, onSubmit }: UserFormProps) => {
 
   const onFormSubmit = (data: UserFormData) => {
     if (isEdit) {
-      // ⚠️ ne jamais envoyer le mot de passe en modification
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { motDePasse, ...updateData } = data;
       onSubmit(updateData);
     } else {
@@ -59,18 +57,17 @@ const UserForm = ({ initialData, onSubmit }: UserFormProps) => {
   };
 
   return (
-    <div className="card bg-base-100 shadow">
+    <div className="card bg-base-100">
       <div className="card-body space-y-4">
-        <h2 className="text-xl font-bold">
+        <h2 className="text-xl text-center font-bold">
           {isEdit ? "Modifier l'utilisateur" : "Nouvel utilisateur"}
         </h2>
 
         <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-4">
-          {/* NOM */}
           <div className="form-control">
             <label className="label font-medium">Nom</label>
             <input
-              className="input input-bordered"
+              className="input input-bordered w-full"
               {...register("nom", { required: "Le nom est requis" })}
             />
             {errors.nom && (
@@ -78,11 +75,10 @@ const UserForm = ({ initialData, onSubmit }: UserFormProps) => {
             )}
           </div>
 
-          {/* PRENOM */}
           <div className="form-control">
             <label className="label font-medium">Prénom</label>
             <input
-              className="input input-bordered"
+              className="input input-bordered w-full"
               {...register("prenom", { required: "Le prénom est requis" })}
             />
             {errors.prenom && (
@@ -92,12 +88,11 @@ const UserForm = ({ initialData, onSubmit }: UserFormProps) => {
             )}
           </div>
 
-          {/* EMAIL */}
           <div className="form-control">
             <label className="label font-medium">Email</label>
             <input
               type="email"
-              className="input input-bordered"
+              className="input input-bordered w-full"
               {...register("email", {
                 required: "L'email est requis",
                 pattern: {
@@ -111,21 +106,19 @@ const UserForm = ({ initialData, onSubmit }: UserFormProps) => {
             )}
           </div>
 
-          {/* ADRESSE */}
           <div className="form-control">
             <label className="label font-medium">Adresse</label>
             <input
-              className="input input-bordered"
+              className="input input-bordered w-full"
               {...register("adresse", { required: true })}
             />
           </div>
 
-          {/* SOLDE */}
           <div className="form-control">
             <label className="label font-medium">Solde de congés</label>
             <input
               type="number"
-              className="input input-bordered"
+              className="input input-bordered w-full"
               {...register("soldeConges", {
                 valueAsNumber: true,
                 min: { value: 0, message: "Solde invalide" },
@@ -133,23 +126,24 @@ const UserForm = ({ initialData, onSubmit }: UserFormProps) => {
             />
           </div>
 
-          {/* ROLE */}
           <div className="form-control">
             <label className="label font-medium">Rôle</label>
-            <select className="select select-bordered" {...register("role")}>
+            <select
+              className="select select-bordered w-full"
+              {...register("role")}
+            >
               <option value="ADMIN">ADMIN</option>
               <option value="GESTIONNAIRE">GESTIONNAIRE</option>
               <option value="EMPLOYE">EMPLOYE</option>
             </select>
           </div>
 
-          {/* MOT DE PASSE */}
           {!isEdit && (
             <div className="form-control">
               <label className="label font-medium">Mot de passe</label>
               <input
                 type="password"
-                className="input input-bordered"
+                className="input input-bordered w-full"
                 {...register("motDePasse", {
                   required: "Mot de passe requis",
                   minLength: {

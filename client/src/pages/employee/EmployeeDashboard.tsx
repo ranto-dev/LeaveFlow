@@ -14,7 +14,7 @@ import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
 import { deleteLeaveRequest } from "../../api/leave.api";
 import AllLeaveRequestList from "../../components/dashboard/AllRequestList";
 import { useAuth } from "../../context/AuthContext";
-import { notify } from "../../utils/notify";
+import { toastPromise } from "../../utils/toastPromise";
 
 const EmployeeDashboard = () => {
   const [leaveRequest, setLeaveRequest] = useState<LeaveRequestType[]>([]);
@@ -45,57 +45,53 @@ const EmployeeDashboard = () => {
   };
 
   const handleCreate = async (data: Partial<LeaveRequestType>) => {
-    const toastId = notify.loading("Envoye en cours ...");
-
     try {
-      await postLeaveRequest(data);
-      setTimeout(() => {
-        notify.success("Demande de congé envoyée avec succès");
-      }, 1000);
+      await toastPromise(postLeaveRequest(data), {
+        loading: "Envoi de la demande en cours ...",
+        success: "Demande de congé envoyée avec succès",
+        error: "Erreur lors de l'envoi",
+      });
+
       setTimeout(() => {
         window.location.reload();
-      }, 2000);
+      }, 1000);
     } catch (err) {
       console.error(err);
-      notify.error("Erreur lors de l'envoi de la demande");
     }
   };
 
   const handleUpdate = async (data: Partial<LeaveRequestType>) => {
-    const toastId = notify.loading("Modification en cours...");
-
     try {
-      await editLeaveRequest(editing?._id as string, data);
-      setEditing(null);
-      setTimeout(() => {
-        notify.success("Demande de congé modifié avec succès");
-      }, 1000);
+      await toastPromise(editLeaveRequest(editing?._id as string, data), {
+        loading: "Modification en cours ...",
+        success: "Demande de congé modifiée avec succès",
+        error: "Erreur lors de la modification",
+      });
+
       setTimeout(() => {
         window.location.reload();
-      }, 2000);
+      }, 1000);
     } catch (err) {
       console.error(err);
-      notify.error("Erreur lors de la modification de la demande");
     }
   };
 
   const confirmDelete = async () => {
     if (!deleting) return;
-    const toastId = notify.loading("suppression en cours ...");
 
     try {
       setDeleteLoading(true);
-      await deleteLeaveRequest(deleting?._id);
+      await toastPromise(deleteLeaveRequest(deleting?._id), {
+        loading: "suppréssion de la demande en cours...",
+        success: "Demande de congé supprimée avec succès",
+        error: "Erreur lors de la suppréssion",
+      });
       setDeleting(null);
       setTimeout(() => {
-        notify.success("Demande de congé supprimé avec succès");
-      }, 1000);
-      setTimeout(() => {
         window.location.reload();
-      }, 2000);
+      }, 1000);
     } catch (err) {
       console.error(err);
-      notify.error("Erreur lors de la suppression du demande");
     } finally {
       setDeleteLoading(false);
     }

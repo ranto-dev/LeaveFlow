@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Modal from "../Modal";
+import { toastPromise } from "../../utils/toastPromise";
 
 const DashboardHeader = () => {
   const navigate = useNavigate();
@@ -13,7 +14,11 @@ const DashboardHeader = () => {
   const confirmLogout = async () => {
     try {
       setLoading(true);
-      await logout();
+      await toastPromise(logout(), {
+        loading: "Déconnexion en cours...",
+        success: "Déconnexion réussie",
+        error: "Erreur lors de la déconnexion",
+      });
       navigate("/login");
     } catch (err) {
       console.error("Erreur lors de la déconnexion", err);
