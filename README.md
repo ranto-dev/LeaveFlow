@@ -26,7 +26,6 @@ une application simple et fonctionnelle permettant
 ### 2.3 Espace Employé
 
 - **Demande de congé** :
-
   - type de congé : maladie, absence, vacances
   - solde disponible
   - dates début + fin
@@ -49,16 +48,15 @@ une application simple et fonctionnelle permettant
 
 ## III. Fonctionnalité a venir
 
-- gestion de notification en temps réelle
+- gestion de notification en temps réelle avec **WebSocket**
 - authentification à double facteur
-- amélioration de l'UI Design (toast de confirmation, animation avec framer-motion)
 
 ## III. Stack
 
 - **frontend**: Tailwindcss & DaisyUI / Typescript & React.js avec framer motion
 - **backend**: Node & Express.js
 - **base de donnée**: MongoDB
-- **API testing**: Extension de VSCode - Rest client et insomnia
+- **API testing**: Rest Client et Insomnia
 - **Continuous Integration**: Docker, Git, GitHub Actions
 
 ### IV. Livrable
