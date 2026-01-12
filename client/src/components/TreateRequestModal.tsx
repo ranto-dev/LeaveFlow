@@ -33,33 +33,39 @@ const TreateRequestModal = ({
   };
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-6 text-center bg-nuetral-500"
-      >
-        <h2 className="text-xl font-semibold text-primary">
-          Traiter la demande
-        </h2>
+      <div className="card">
+        <form
+          onSubmit={handleSubmit}
+          className="card-body space-y-2 text-center bg-nuetral-500"
+        >
+          <div>
+            <h2 className="text-xl">Traiter la demande</h2>
+          </div>
 
-        <div>
-          <label htmlFor="statut">Status</label>
-          <select name="statut" id="statut" className="select select-bordered">
-            <option value="">-- Choisir --</option>
-            <option value="ACCEPTEE">ACCEPTEE</option>
-            <option value="REFUSEE">REFUSEE</option>
-          </select>
-        </div>
+          <div className="flex flex-col items-start gap-1">
+            <label htmlFor="statut">Status</label>
+            <select
+              name="statut"
+              id="statut"
+              className="select select-bordered w-full"
+            >
+              <option value="">-- Choisir --</option>
+              <option value="ACCEPTEE">ACCEPTEE</option>
+              <option value="REFUSEE">REFUSEE</option>
+            </select>
+          </div>
 
-        <div className="flex justify-center gap-4">
-          <button onClick={onClose} className="btn btn-outline btn-light">
-            Annuler
-          </button>
+          <div className="flex justify-center items-center gap-4 p-2">
+            <button onClick={onClose} className="btn btn-error">
+              Annuler
+            </button>
 
-          <button type="submit" className="btn btn-primary text-white">
-            Confirmer
-          </button>
-        </div>
-      </form>
+            <button type="submit" className="btn btn-primary text-white">
+              Confirmer
+            </button>
+          </div>
+        </form>
+      </div>
     </Modal>
   );
 };

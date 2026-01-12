@@ -4,7 +4,7 @@
 
 import { useMemo, useState } from "react";
 import { MdEdit } from "react-icons/md";
-import { FaHourglass, FaTrash } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa6";
 import Modal from "../Modal";
 import type { LeaveRequestType } from "../../@types/requestLeave";
 type SortKey = "dateDebut" | "dateFin";
@@ -177,17 +177,17 @@ const AllLeaveRequestList = ({
                       {userRole === "GESTIONNAIRE" && (
                         <>
                           <button
-                            className="btn btn-sm btn-outline"
+                            className="btn btn-success text-white"
                             onClick={() => openModal(request)}
                           >
                             Commentaire
                           </button>
                           <button
-                            className="btn btn-sm btn-primary"
+                            className="btn btn-primary"
                             disabled={request.statut !== "EN_ATTENTE"}
                             onClick={() => onTreat?.(request)}
                           >
-                            <FaHourglass />
+                            Traiter
                           </button>
                         </>
                       )}
@@ -222,7 +222,7 @@ const AllLeaveRequestList = ({
       <Modal isOpen={isOpenModal} onClose={closeModal}>
         <div className="space-y-4 text-center">
           <h2 className="text-xl font-bold">Commentaire</h2>
-          <p>{modalText}</p>
+          <p>" {modalText} "</p>
           <button className="btn btn-primary" onClick={closeModal}>
             Fermer
           </button>

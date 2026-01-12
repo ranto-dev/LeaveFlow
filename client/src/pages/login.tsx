@@ -35,7 +35,7 @@ const LoginPage = () => {
       <div className="card w-full max-w-md bg-base-100 shadow-2xl rounded-xl">
         <div className="card-body space-y-4">
           <div className="text-center space-y-1">
-            <h2 className="text-2xl font-bold">Connexion</h2>
+            <h2 className="text-2xl">Page de Connexion</h2>
             <p className="text-sm text-neutral-500">
               Accédez à votre espace de gestion des congés
             </p>
@@ -55,7 +55,6 @@ const LoginPage = () => {
               <input
                 type="email"
                 className="input input-bordered w-full"
-                placeholder="ex: contact.votreadresse@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -69,7 +68,6 @@ const LoginPage = () => {
               <input
                 type="password"
                 className="input input-bordered w-full"
-                placeholder="••••••••"
                 value={motDePasse}
                 onChange={(e) => setMotDePasse(e.target.value)}
                 required

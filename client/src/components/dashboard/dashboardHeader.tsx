@@ -30,9 +30,11 @@ const DashboardHeader = () => {
 
   return (
     <>
-      <header>
+      <header className="sticky container mx-auto  top-0 z-40 bg-base-100/80 backdrop-blur border-b border-neutral-500/20">
         <div className="w-full container mx-auto border border-neutral-500/30 shadow-xl rounded-lg p-4 flex justify-between items-center">
-          <div className="text-xl font-bold">LeaveFlow</div>
+          <div className="text-md">
+            <span className="text-primary">Leave</span>Flow
+          </div>
 
           <div className="flex items-center gap-4">
             <div
